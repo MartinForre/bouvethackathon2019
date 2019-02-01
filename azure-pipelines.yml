@@ -26,7 +26,9 @@ steps:
     archiveFile: 'pantklient/dist/pantklient-build.zip'
     archiveType: zip
     replaceExistingArchive: true
-- task: PublishPipelineArtifact@0
+- task: PublishBuildArtifacts@1
   inputs:
+    pathtoPublish: 'pantklient/dist'
+    publishLocation: FilePath
     artifactName: 'pantklient'
     targetPath: 'pantklient/dist'
