@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PantAPI.Models;
+using PantAPI.Repositories;
 
 namespace PantAPI.Controllers
 {
@@ -11,6 +12,16 @@ namespace PantAPI.Controllers
     [ApiController]
     public class QRController : ControllerBase
     {
+        [HttpGet]
+        [Route("tull")]
+        public async Task<Bag> Tull([FromServices] BagRepository bagRepository)
+        {
+            var bagId = "d9c47d23-f35d-41e4-9652-99bd8609534d";
+            var userId = "94d0266d-b4c0-47f2-88fd-d25ec8829915";
+            
+            return await bagRepository.GetAsync(userId, bagId);
+        }
+
         // GET api/values
         [HttpPost]
         [Route("Add")]
@@ -22,8 +33,7 @@ namespace PantAPI.Controllers
 
             var bag = new Bag
             {
-                BagCreatedDate = DateTime.UtcNow,
-                BagId = bagid,
+                CreatedDate = DateTime.UtcNow,
                 Status = BagStatus.Created
             };
 
@@ -32,13 +42,17 @@ namespace PantAPI.Controllers
 
         [HttpPost]
         [Route("Activate")]
-        [ProducesResponseType(typeof(bool), 200)]
-        public ActionResult Activate(string qrCode, string userid)
+        [ProducesResponseType(typeof(ActivateResultModel), 200)]
+        public ActionResult Activate([FromBody] ActivateModel activateModel)
         {
 
+            
             //oppdater qr-code-"record" med bruker som har registrert posen
             //sett status som "active?"
-            return Ok(true);
+            return Ok(new ActivateResultModel
+            {
+                Status = ActivativateStatus.OK
+            });
             //hvis koden ikke finnes i databasen, returneres false;
 
         }

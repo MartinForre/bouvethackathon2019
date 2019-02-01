@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using PantAPI.Repositories;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace PantAPI
@@ -32,6 +33,7 @@ namespace PantAPI
                 c.SwaggerDoc("v1", new Info { Title = "PantAPI", Version = "v1" });
             });
             services.AddCors();
+            services.AddTransient<BagRepository>(s => new BagRepository(Configuration.GetValue<string>("StorageConnectionString")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,11 +51,10 @@ namespace PantAPI
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/swagger/v1/swagger.json", "PantAPI V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "PantAPI V1");
             });
 
-                app.UseCors(builder =>
-                    builder.WithOrigins("*.azurewebsites.net"));
+            app.UseCors(builder => builder.WithOrigins("*.azurewebsites.net", "localhost"));
 
 
             app.UseHttpsRedirection();
