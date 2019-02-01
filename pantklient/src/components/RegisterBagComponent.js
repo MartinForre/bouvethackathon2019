@@ -28,11 +28,13 @@ class RegisterBagComponent extends Component {
 
         const validationResponses = ['Godkjent', 'Ikke godkjent', 'Brukt'];
 
-      /*  fetch('http://bouvet-panther-api.azurewebsites.net/api/QR/Activate?qrCode=' + this.state.bagId + '&userid=' + this.state.uid)
+        fetch('http://bouvet-panther-api.azurewebsites.net/api/QR/Activate', {
+            method: "POST",
+                body: JSON.stringify({a: 1, b: 2})
+        })
             .then(response => response.json())
             .then(data => console.log(data))
-            .catch(error => console.log(error));
-return;*/
+            .catch(error => console.log(error))
 
         setTimeout(function(){
             that.setState({isBagIdValidated: true, validationResponse: validationResponses[Math.floor(Math.random() * validationResponses.length)  ]})
@@ -49,7 +51,7 @@ return;*/
         if(id == null){
             //TODO fetch user ID from API and store to localstorage.
             //mock
-            const id = 123141231
+            id = 123141231
         }
 
         localStorage.setItem('uid', id);

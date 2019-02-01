@@ -2,7 +2,6 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 // Pages
-import HomeComponent from '../components/HomeComponent';
 import AboutComponent from '../components/AboutComponent';
 import RegisterBagComponent from '../components/RegisterBagComponent';
 import QrScannerComponent from '../components/QrScannerComponent';
