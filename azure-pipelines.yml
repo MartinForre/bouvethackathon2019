@@ -17,5 +17,5 @@ steps:
     versionSpec: '8.x'
 - script: npm install
   workingDirectory: pantklient
-- script: npm build
+- script: npm run build
   workingDirectory: pantklient
