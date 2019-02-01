@@ -9,3 +9,6 @@ Hvordan redde den blå planeten? Plast i havet er en av vår tids største milj�
 
 ## Har du lyst til å bidra?
 Hvis du har lyst til å bidra mens vi jobber er det bare å sende inn pull requester.
+
+Vi trenger også bidrag med design. Legge in skisser, ikoen eller andre bidrag til denne drive folderen:
+https://drive.google.com/drive/folders/1PbYRQSnXKq2ntPqsWUQM23SLOkFXL6sR?usp=sharing
