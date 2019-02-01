@@ -30,7 +30,7 @@ namespace PantAPI
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v3", new Info { Title = "PantAPI", Version = "v3" });
+                c.SwaggerDoc("v1", new Info { Title = "PantAPI", Version = "v1" });
             });
             services.AddCors();
             services.AddTransient<BagRepository>(s => new BagRepository(Configuration.GetValue<string>("StorageConnectionString")));
@@ -51,11 +51,10 @@ namespace PantAPI
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v3/swagger.json", "PantAPI V3");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "PantAPI V1");
             });
 
-                app.UseCors(builder =>
-                    builder.WithOrigins("*.azurewebsites.net"));
+            app.UseCors(builder => builder.WithOrigins("*.azurewebsites.net", "localhost"));
 
 
             app.UseHttpsRedirection();
