@@ -54,20 +54,25 @@ class RegisterBagComponent extends Component {
             }
           };
           
-          fetch('https://jsonplaceholder.typicode.com/posts', options)
+  
+          fetch('http://bouvet-panther-api.azurewebsites.net/api/QR/Activate', options)
             .then(res => res.json())
             .then(res => this.handleRespone(res))
             .then(res => console.log(res));
-
+            
+/*
 
 
         //this.handleRespone({status: 200, validationResponse: 'verified'});
-    /*    fetch('http://bouvet-panther-api.azurewebsites.net/api/QR/Activate?qrCode=' + this.state.bagId + '&userid=' + this.state.uid, {
+        fetch('http://bouvet-panther-api.azurewebsites.net/api/QR/Activate?BagId=' + this.state.bagId + '&UserId=' + this.state.uid, {
             method: "POST",
             mode: "no-cors"
-        }).then(response => response.json())
-            .then(response => this.handleRespone({status: 200, verificationStatus: 'verified'}))
-            .catch(error => console.log(error)) //TODO handle error riktig.*/
+        }).then(response => response)
+            .then(response => this.handleRespone(response))
+            .catch(error => console.log(error)) //TODO handle error riktig.
+
+            https://jsonplaceholder.typicode.com/posts
+            */
     }
 
     handleRespone(response){
