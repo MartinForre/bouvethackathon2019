@@ -14,9 +14,6 @@ class App extends Component {
 						<Link to="/"> Home </Link>
 					</li>
 					<li>
-						<Link to="/scan"> Scanner </Link>
-					</li>
-					<li>
 						<Link to="/about"> About </Link>
 					</li>
 				</ul>
