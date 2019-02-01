@@ -29,6 +29,6 @@ steps:
 - task: PublishBuildArtifacts@1
   inputs:
     pathtoPublish: 'pantklient/dist'
-    publishLocation: FilePath
+    publishLocation: Container
     artifactName: 'pantklient'
     targetPath: 'pantklient/dist'
