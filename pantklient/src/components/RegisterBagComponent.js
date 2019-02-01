@@ -16,20 +16,22 @@ class RegisterBagComponent extends Component {
 
     componentDidMount() {
         const  { id } = this.props.match.params;
+        this.setState({ bagId : id });
         this.checkOrGetUserId();
-        this.setState({bagId:id});
     }
 
     checkOrGetUserId() {
         let id = localStorage.getItem('uid');
         if(id == null){
-            //TODO fetch user ID from API and store to localstorage.
-            //mock
-            id = 123141231
+            fetch('https://bouvet-panther-api.azurewebsites.net/api/User/Register', {
+                method: "GET",
+                mode: "no-cors"
+            }).then(response => response.json())
+                .then(response => this.setState({uid: response.uid}))
+                .catch(error => console.log(error)) //TODO handle error riktig.
+        }else{
+            this.setState({uid: id})
         }
-
-        localStorage.setItem('uid', id);
-        this.setState({uid: id});
     }
 
     verifyBagId() {
@@ -59,9 +61,16 @@ class RegisterBagComponent extends Component {
         console.log((response))
         //TODO gjør noe med responsen her!
         // vise godkjent / ikke godkjent, bla bla
+        console.log(response);
     }
 
     render(){
+
+        if(this.state.uid == null){
+            return (<div>
+                <FaRecycle/>
+            </div>);
+        }
 
         this.verifyBagId();
 
