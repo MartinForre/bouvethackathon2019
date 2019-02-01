@@ -8,8 +8,7 @@ class RegisterBagComponent extends Component {
 
         this.state = {
             bagId: null,
-            isBagIdValidated: false,
-            validationResponse: '',
+            validationResponse: null,
             uid: null
         }
     }
@@ -18,10 +17,14 @@ class RegisterBagComponent extends Component {
         const  { id } = this.props.match.params;
         this.setState({ bagId : id });
         this.checkOrGetUserId();
+        this.verifyBagId();
     }
 
     checkOrGetUserId() {
         let id = localStorage.getItem('uid');
+
+        //hack
+        id=12312312;
         if(id == null){
             fetch('http://bouvet-panther-api.azurewebsites.net/api/User/Register', {
                 method: "GET",
@@ -35,17 +38,22 @@ class RegisterBagComponent extends Component {
     }
 
     verifyBagId() {
-        fetch('http://bouvet-panther-api.azurewebsites.net/api/QR/Activate?qrCode=' + this.state.bagId + '&userid=' + this.state.uid, {
+        this.handleRespone({status: 200, validationResponse: 'verified'});
+    /*    fetch('http://bouvet-panther-api.azurewebsites.net/api/QR/Activate?qrCode=' + this.state.bagId + '&userid=' + this.state.uid, {
             method: "POST",
             mode: "no-cors"
-        }).then(response => this.handleRespone(response))
-            .catch(error => console.log(error)) //TODO handle error riktig.
+        }).then(response => response.json())
+            .then(response => this.handleRespone({status: 200, verificationStatus: 'verified'}))
+            .catch(error => console.log(error)) //TODO handle error riktig.*/
     }
 
     handleRespone(response){
         //TODO gjør noe med responsen her!
         // vise godkjent / ikke godkjent, bla bla
         console.log(response);
+        this.setState({
+            validationResponse: response.validationResponse
+        });
     }
 
     render(){
@@ -56,15 +64,13 @@ class RegisterBagComponent extends Component {
             </div>);
         }
 
-        this.verifyBagId();
-
 
         return(
             <div>
                 <h1>REGISTER BAG</h1>
                 <p>Din pose har id: {this.state.bagId}</p>
 
-                {this.state.isBagIdValidated ? <p>Bag response: {this.state.validationResponse} </p> : <FaRecycle/>}
+                {this.state.validationResponse ? <p>Bag response: {this.state.validationResponse} </p> : <FaRecycle/>}
             </div>
         )
     }
