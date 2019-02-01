@@ -32,13 +32,17 @@ namespace PantAPI.Controllers
 
         [HttpPost]
         [Route("Activate")]
-        [ProducesResponseType(typeof(bool), 200)]
-        public ActionResult Activate(string qrCode, string userid)
+        [ProducesResponseType(typeof(ActivateResultModel), 200)]
+        public ActionResult Activate([FromBody] ActivateModel activateModel)
         {
 
+            
             //oppdater qr-code-"record" med bruker som har registrert posen
             //sett status som "active?"
-            return Ok(true);
+            return Ok(new ActivateResultModel
+            {
+                Status = ActivativateStatus.OK
+            });
             //hvis koden ikke finnes i databasen, returneres false;
 
         }
