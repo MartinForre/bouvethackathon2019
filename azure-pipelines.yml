@@ -19,3 +19,7 @@ steps:
   workingDirectory: pantklient
 - script: npm run build
   workingDirectory: pantklient
+- task: PublishPipelineArtifact@0
+  inputs:
+    artifactName: 'pantklient'
+    targetPath: 'pantklient/build'
