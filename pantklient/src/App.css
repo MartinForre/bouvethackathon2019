@@ -7,6 +7,18 @@
   height: auto;
 }
 
+.green{
+  color: #42ff3b
+}
+.red{
+  color: #ff1616
+}
+.huge-icon{
+
+  width: 50%; 
+  height: auto;
+
+}
 .App-header {
   background-color: #282c34;
   min-height: 100vh;

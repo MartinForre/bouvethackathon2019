@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { FaRecycle } from 'react-icons/fa';
-
+import VerifiedQrComponent from './VerifiedQrComponent';
 class RegisterBagComponent extends Component {
 
     constructor(props){
@@ -8,8 +8,7 @@ class RegisterBagComponent extends Component {
 
         this.state = {
             bagId: null,
-            isBagIdValidated: false,
-            validationResponse: '',
+            validationResponse: null,
             uid: null
         }
     }
@@ -18,10 +17,14 @@ class RegisterBagComponent extends Component {
         const  { id } = this.props.match.params;
         this.setState({ bagId : id });
         this.checkOrGetUserId();
+        this.verifyBagId();
     }
 
     checkOrGetUserId() {
         let id = localStorage.getItem('uid');
+
+        //hack
+        id=12312312;
         if(id == null){
             fetch('https://bouvet-panther-api.azurewebsites.net/api/User/Register', {
                 method: "GET",
@@ -37,8 +40,7 @@ class RegisterBagComponent extends Component {
     verifyBagId() {
    
         const myPost = {
-            qrCode: this.state.bagId,
-            userid: this.state.uid
+            validationResponse: 'OK'
           }
           
           const options = {
@@ -51,17 +53,27 @@ class RegisterBagComponent extends Component {
           
           fetch('https://jsonplaceholder.typicode.com/posts', options)
             .then(res => res.json())
+            .then(res => this.handleRespone(res))
             .then(res => console.log(res));
 
 
 
+        //this.handleRespone({status: 200, validationResponse: 'verified'});
+    /*    fetch('http://bouvet-panther-api.azurewebsites.net/api/QR/Activate?qrCode=' + this.state.bagId + '&userid=' + this.state.uid, {
+            method: "POST",
+            mode: "no-cors"
+        }).then(response => response.json())
+            .then(response => this.handleRespone({status: 200, verificationStatus: 'verified'}))
+            .catch(error => console.log(error)) //TODO handle error riktig.*/
     }
 
     handleRespone(response){
-        console.log((response))
         //TODO gjør noe med responsen her!
         // vise godkjent / ikke godkjent, bla bla
         console.log(response);
+        this.setState({
+            validationResponse: response.validationResponse
+        });
     }
 
     render(){
@@ -72,15 +84,16 @@ class RegisterBagComponent extends Component {
             </div>);
         }
 
-        this.verifyBagId();
-
 
         return(
             <div className="App">
                 <h1>REGISTER BAG</h1>
                 <p>Din pose har id: {this.state.bagId}</p>
 
-                {this.state.isBagIdValidated ? <p>Bag response: {this.state.validationResponse} </p> : <FaRecycle className="App-logo"/>}
+                {this.state.validationResponse ? 
+                <VerifiedQrComponent
+                   validationResponse= {this.state.validationResponse}/> : 
+                <FaRecycle className="App-logo"/>}
             </div>
         )
     }
