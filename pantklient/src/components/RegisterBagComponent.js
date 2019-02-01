@@ -48,6 +48,7 @@ class RegisterBagComponent extends Component {
           
           const options = {
             method: 'POST',
+            mode:"no-cors",
             body: JSON.stringify(myPost),
             headers: {
               'Content-Type': 'application/json'
