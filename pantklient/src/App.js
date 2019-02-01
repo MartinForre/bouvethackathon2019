@@ -8,17 +8,19 @@ class App extends Component {
 
 	renderHeader = () => (
 		<div>
-			<ul>
-				<li>
-					<Link to="/"> Home </Link>
-				</li>
-				<li>
-					<Link to="/scan"> Scanner </Link>
-				</li>
-				<li>
-					<Link to="/about"> About </Link>
-				</li>
-			</ul>
+      <nav>
+				<ul>
+					<li>
+						<Link to="/"> Home </Link>
+					</li>
+					<li>
+						<Link to="/scan"> Scanner </Link>
+					</li>
+					<li>
+						<Link to="/about"> About </Link>
+					</li>
+				</ul>
+      </nav>
 		</div>
 	);
 
