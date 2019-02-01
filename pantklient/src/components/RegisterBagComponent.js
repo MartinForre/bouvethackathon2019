@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { FaRecycle } from 'react-icons/fa';
-
+import VerifiedQrComponent from './VerifiedQrComponent';
 class RegisterBagComponent extends Component {
 
     constructor(props){
@@ -41,12 +41,39 @@ class RegisterBagComponent extends Component {
     }
 
     verifyBagId() {
-        fetch('http://bouvet-panther-api.azurewebsites.net/api/QR/Activate?qrCode=' + this.state.bagId + '&userid=' + this.state.uid, {
+   
+        const myPost = {
+            validationResponse: 'OK'
+          }
+          
+          const options = {
+            method: 'POST',
+            mode:"no-cors",
+            body: JSON.stringify(myPost),
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          };
+          
+  
+          fetch('https://bouvet-panther-api.azurewebsites.net/api/QR/Activate', options)
+            .then(res => res.json())
+            .then(res => this.handleRespone(res))
+            .then(res => console.log(res));
+            
+/*
+
+
+        //this.handleRespone({status: 200, validationResponse: 'verified'});
+        fetch('http://bouvet-panther-api.azurewebsites.net/api/QR/Activate?BagId=' + this.state.bagId + '&UserId=' + this.state.uid, {
             method: "POST",
             mode: "no-cors"
-        }).then(response => response.json())
-            .then(response => this.handleRespone({status: 200, verificationStatus: 'verified'}))
-            .catch(error => console.log(error)) //TODO handle error riktig.*/
+        }).then(response => response)
+            .then(response => this.handleRespone(response))
+            .catch(error => console.log(error)) //TODO handle error riktig.
+
+            https://jsonplaceholder.typicode.com/posts
+            */
     }
 
     handleRespone(response){
@@ -68,11 +95,14 @@ class RegisterBagComponent extends Component {
 
 
         return(
-            <div>
+            <div className="App">
                 <h1>REGISTER BAG</h1>
                 <p>Din pose har id: {this.state.bagId}</p>
 
-                {this.state.validationResponse ? <p>Bag response: {this.state.validationResponse} </p> : <FaRecycle/>}
+                {this.state.validationResponse ? 
+                <VerifiedQrComponent
+                   validationResponse= {this.state.validationResponse}/> : 
+                <FaRecycle className="App-logo"/>}
             </div>
         )
     }

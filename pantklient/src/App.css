@@ -1,12 +1,24 @@
 .App {
   text-align: center;
 }
-
 .App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
+  animation: App-logo-spin infinite 2s linear; 
+  width: 5%; 
+  height: auto;
 }
 
+.green{
+  color: #42ff3b
+}
+.red{
+  color: #ff1616
+}
+.huge-icon{
+
+  width: 50%; 
+  height: auto;
+
+}
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
