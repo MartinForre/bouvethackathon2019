@@ -33,7 +33,7 @@ namespace PantAPI
                 c.SwaggerDoc("v1", new Info { Title = "PantAPI", Version = "v1" });
             });
             services.AddCors();
-            services.AddTransient<BagRepository>(s => new BagRepository(Configuration.GetValue<string>("StorageConnectionString")));
+            services.AddTransient(s => new BagRepository(Configuration.GetValue<string>("StorageConnectionString")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
