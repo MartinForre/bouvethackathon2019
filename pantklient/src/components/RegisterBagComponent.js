@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { FaRecycle } from 'react-icons/fa';
 import VerifiedQrComponent from './VerifiedQrComponent';
+
 class RegisterBagComponent extends Component {
 
     constructor(props){
@@ -17,71 +18,51 @@ class RegisterBagComponent extends Component {
         const  { id } = this.props.match.params;
         this.setState({ bagId : id });
         this.checkOrGetUserId();
-        this.verifyBagId();
     }
 
     checkOrGetUserId() {
         let id = localStorage.getItem('uid');
 
-        //hack
-        id=12312312;
         if(id == null){
-            fetch('http://bouvet-panther-api.azurewebsites.net/api/User/Register', {
+            fetch('https://bouvet-panther-api.azurewebsites.net/api/User/Register', {
                 method: "GET",
-                mode: "no-cors"
-            }).then(response => response.text())
-                .then(response => {
-                    console.log(response)
-                    this.setState({uid: response.uid})
-                })
-                .catch(error => console.log(error)) //TODO handle error riktig.
-        }else{
-            this.setState({uid: id})
+            }).then(response => response.json())
+            .then(response => {
+                this.setState({uid: response.uid})
+                localStorage.setItem('uid', response.uid)
+                this.verifyBagId()
+            })
+            .catch(error => console.log(error)) //TODO handle error riktig.
+        } else {
+            this.setState(
+                {uid: id},
+                () => this.verifyBagId()
+            )
         }
     }
 
     verifyBagId() {
-   
         const myPost = {
-            BagId: 123,
-            UserId: 323
-          }
+            BagId: this.state.bagId,
+            UserId: this.state.uid
+        }
           
-          const options = {
+        const options = {
             method: 'POST',
-            mode:"cors",
+            mode: 'cors',
             body: JSON.stringify(myPost),
             headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
+                'Content-Type': 'application/json'
             },
-          };
-          
-  
-          fetch('https://bouvet-panther-api.azurewebsites.net/api/QR/Activate', options)
+        };
+
+        fetch('https://bouvet-panther-api.azurewebsites.net/api/QR/Activate', options)
             .then(res => res.json())
             .then(res => this.handleRespone(res))
-            .then(res => console.log(res));
-            
-/*
-
-
-        //this.handleRespone({status: 200, validationResponse: 'verified'});
-        fetch('http://bouvet-panther-api.azurewebsites.net/api/QR/Activate?BagId=' + this.state.bagId + '&UserId=' + this.state.uid, {
-            method: "POST",
-            mode: "no-cors"
-        }).then(response => response)
-            .then(response => this.handleRespone(response))
-            .catch(error => console.log(error)) //TODO handle error riktig.
-
-            https://jsonplaceholder.typicode.com/posts
-            */
+            .catch(error => console.log(error));
     }
 
     handleRespone(response){
-        //TODO gjør noe med responsen her!
-        // vise godkjent / ikke godkjent, bla bla
-        console.log(response);
         this.setState({
             validationResponse: response.status
         });
@@ -94,7 +75,6 @@ class RegisterBagComponent extends Component {
                 <FaRecycle/>
             </div>);
         }
-
 
         return(
             <div className="App">
