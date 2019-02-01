@@ -16,7 +16,7 @@ namespace PantAPI.Controllers
         [ProducesResponseType(typeof(string), 200)]
         public ActionResult Add()
         {
-            var url = "http://bouvet.no/" + Guid.NewGuid().ToString();
+            var url = "https://bouvet-panther.azurewebsites.net/activate/" + Guid.NewGuid().ToString();
             //db-add.
             return Ok(url);
         }
