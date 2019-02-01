@@ -11,6 +11,8 @@ namespace PantAPI.Models
     {
         [JsonConverter(typeof(StringEnumConverter))]
         public ActivativateStatus Status { get; set; }
+        public string UserId { get; internal set; }
+        public string BagId { get; internal set; }
     }
 
     public enum ActivativateStatus

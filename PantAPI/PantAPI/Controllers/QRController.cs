@@ -12,6 +12,14 @@ namespace PantAPI.Controllers
     [ApiController]
     public class QRController : ControllerBase
     {
+        private BagRepository bagRepository;
+
+        public QRController(BagRepository bagRepository)
+        {
+            this.bagRepository = bagRepository;
+        }
+
+
         [HttpGet]
         [Route("tull")]
         public async Task<Bag> Tull([FromServices] BagRepository bagRepository)
@@ -43,18 +51,33 @@ namespace PantAPI.Controllers
         [HttpPost]
         [Route("Activate")]
         [ProducesResponseType(typeof(ActivateResultModel), 200)]
-        public ActionResult Activate(ActivateModel activateModel)
+        public async Task<ActionResult> Activate([FromBody] ActivateModel activateModel)
         {
+            var bag = await bagRepository.GetAsync("NA", activateModel.BagId);
+            if (bag == null)
+            {
+                return Ok(new ActivateResultModel
+                {
+                    Status = ActivativateStatus.Unknown
+                });
+            }
 
+            if (string.IsNullOrEmpty(activateModel.UserId))
+            {
+                activateModel.UserId = Guid.NewGuid().ToString();
+            }
+
+            await bagRepository.DeleteAsync(bag);
+
+            bag.PartitionKey = activateModel.UserId;
+            await bagRepository.AddOrUpdateAsync(bag);
             
-            //oppdater qr-code-"record" med bruker som har registrert posen
-            //sett status som "active?"
             return Ok(new ActivateResultModel
             {
-                Status = ActivativateStatus.OK
+                Status = ActivativateStatus.OK,
+                UserId = bag.UserId,
+                BagId = bag.BagId
             });
-            //hvis koden ikke finnes i databasen, returneres false;
-
         }
 
         [HttpGet]

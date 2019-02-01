@@ -33,6 +33,13 @@ namespace PantAPI.Repositories
             return (Bag)result.Result;
         }
 
+        public async Task DeleteAsync(Bag bag)
+        {
+            var deleteOperation = TableOperation.Delete(bag);
+            var table = await GetTableAsync();
+            await table.ExecuteAsync(deleteOperation);
+        }
+
         private async Task<CloudTable> GetTableAsync()
         {
             var client = GetCloudTableClient();
