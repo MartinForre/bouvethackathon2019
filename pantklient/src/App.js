@@ -7,8 +7,8 @@ import Routes from './containers/navigation';
 class App extends Component {
 
 	renderHeader = () => (
-		<div>
-      <nav>
+		<div id="nav-container">
+      		<nav>
 				<ul>
 					<li>
 						<Link to="/"> Home </Link>
@@ -17,7 +17,7 @@ class App extends Component {
 						<Link to="/about"> About </Link>
 					</li>
 				</ul>
-      </nav>
+      		</nav>
 		</div>
 	);
 
