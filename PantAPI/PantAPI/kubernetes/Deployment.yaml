@@ -1,0 +1,42 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: pant-api
+<<<<<<< HEAD
+<<<<<<< HEAD
+  namespace: #{NAMESPACE}#
+=======
+  namespace: pant
+>>>>>>> 0d52fd8... added k8s config and dockerfile
+=======
+  namespace: #{NAMESPACE}#
+>>>>>>> 5a1b989... frontend dockerfile
+  labels:
+    app: pant-api
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: pant-api
+    spec:
+      containers:
+      - name: pant-api
+<<<<<<< HEAD
+<<<<<<< HEAD
+        image: chaos.azurecr.io/pant-api:#{Build.BuildId}#
+=======
+        image: bouvetenigma.azurecr.io/pant-api:#{Build.BuildId}#
+>>>>>>> 0d52fd8... added k8s config and dockerfile
+=======
+        image: chaos.azurecr.io/pant-api:#{Build.BuildId}#
+>>>>>>> 5a1b989... frontend dockerfile
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 5000
+        resources:
+          limits:
+            cpu: "200m"
+            memory: "300Mi"
+      imagePullSecrets:
+        - name: acr

@@ -1,0 +1,29 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: pant-api
+  namespace: #{NAMESPACE}#
+  labels:
+    app: pant-api
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: "true"
+    certmanager.k8s.io/cluster-issuer: letsencrypt-prod
+    ingress.kubernetes.io/secure-backends: "true"
+spec:
+  rules:
+  - host: #{NAMESPACE}#-api.bouvetapps.io
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: pant-api
+<<<<<<< HEAD
+          servicePort: 5000
+=======
+          servicePort: 80
+>>>>>>> 0d52fd8... added k8s config and dockerfile
+  tls:
+    - hosts:
+      - #{NAMESPACE}#-api.bouvetapps.io
+      secretName: #{NAMESPACE}#-api.bouvetapps.io

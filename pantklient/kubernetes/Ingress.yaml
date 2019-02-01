@@ -1,0 +1,25 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: pant-web
+  namespace: #{NAMESPACE}#
+  labels:
+    app: pant-web
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: "true"
+    certmanager.k8s.io/cluster-issuer: letsencrypt-prod
+    ingress.kubernetes.io/secure-backends: "true"
+spec:
+  rules:
+  - host: #{NAMESPACE}#.bouvetapps.io
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: pant-web
+          servicePort: 80
+  tls:
+    - hosts:
+      - #{NAMESPACE}#.bouvetapps.io
+      secretName: #{NAMESPACE}#.bouvetapps.io

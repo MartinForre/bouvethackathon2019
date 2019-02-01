@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pant-web
+  namespace: #{NAMESPACE}#
+spec:
+  selector:
+    matchLabels:
+      app: pant-web
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: pant-web
+    spec:
+      containers:
+      - name: pant-web
+        image: chaos.azurecr.io/pant-web:#{Build.BuildId}#
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            cpu: "100m"
+            memory: "300Mi"
+      imagePullSecrets:
+        - name: acr
