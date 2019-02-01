@@ -33,12 +33,25 @@ class RegisterBagComponent extends Component {
     }
 
     verifyBagId() {
-        fetch('http://bouvet-panther-api.azurewebsites.net/api/QR/Activate?qrCode=' + this.state.bagId + '&userid=' + this.state.uid, {
-            method: "POST",
-            mode: "no-cors"
-        })
-        .then(response => this.handleRespone(response))
-        .catch(error => console.log(error)) //TODO handle error riktig.
+   
+        const myPost = {
+            qrCode: this.state.bagId,
+            userid: this.state.uid
+          }
+          
+          const options = {
+            method: 'POST',
+            body: JSON.stringify(myPost),
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          };
+          
+          fetch('https://jsonplaceholder.typicode.com/posts', options)
+            .then(res => res.json())
+            .then(res => console.log(res));
+
+
 
     }
 
