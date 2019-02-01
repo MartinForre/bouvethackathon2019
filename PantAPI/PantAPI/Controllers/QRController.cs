@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PantAPI.Models;
+using PantAPI.Repositories;
 
 namespace PantAPI.Controllers
 {
@@ -11,6 +12,20 @@ namespace PantAPI.Controllers
     [ApiController]
     public class QRController : ControllerBase
     {
+        [HttpGet]
+        [Route("tull")]
+        public async Task<Bag> Tull([FromServices] BagRepository bagRepository)
+        {
+            var bagId = Guid.NewGuid().ToString();
+            var userId = Guid.NewGuid().ToString();
+            var bag = new Bag(userId, bagId)
+            {
+                CreatedDate = DateTime.UtcNow
+            };
+
+            return await bagRepository.AddBagAsync(bag);
+        }
+
         // GET api/values
         [HttpPost]
         [Route("Add")]
@@ -22,8 +37,7 @@ namespace PantAPI.Controllers
 
             var bag = new Bag
             {
-                BagCreatedDate = DateTime.UtcNow,
-                BagId = bagid,
+                CreatedDate = DateTime.UtcNow,
                 Status = BagStatus.Created
             };
 
