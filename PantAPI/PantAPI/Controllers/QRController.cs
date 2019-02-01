@@ -16,14 +16,10 @@ namespace PantAPI.Controllers
         [Route("tull")]
         public async Task<Bag> Tull([FromServices] BagRepository bagRepository)
         {
-            var bagId = Guid.NewGuid().ToString();
-            var userId = Guid.NewGuid().ToString();
-            var bag = new Bag(userId, bagId)
-            {
-                CreatedDate = DateTime.UtcNow
-            };
-
-            return await bagRepository.AddBagAsync(bag);
+            var bagId = "d9c47d23-f35d-41e4-9652-99bd8609534d";
+            var userId = "94d0266d-b4c0-47f2-88fd-d25ec8829915";
+            
+            return await bagRepository.GetAsync(userId, bagId);
         }
 
         // GET api/values
