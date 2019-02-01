@@ -24,6 +24,21 @@ namespace PantAPI.Repositories
             return bag;
         }
 
+        public async Task<Bag> AddNewAsync(string bagId)
+        {
+            var bag = new Bag("NA", bagId);
+            var insertOperation = TableOperation.InsertOrReplace(bag);
+            var table = await GetTableAsync();
+            await table.ExecuteAsync(insertOperation);
+
+            return bag;
+        }
+
+        public async Task<Bag> GetUnusedAsync(string bagId)
+        {
+            return await GetAsync("NA", bagId);
+        }
+
         public async Task<Bag> GetAsync(string userId, string bagId)
         {
             var retrieveOperation = TableOperation.Retrieve<Bag>(userId, bagId);

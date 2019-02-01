@@ -53,7 +53,7 @@ namespace PantAPI.Controllers
         [ProducesResponseType(typeof(ActivateResultModel), 200)]
         public async Task<ActionResult> Activate([FromBody] ActivateModel activateModel)
         {
-            var bag = await bagRepository.GetAsync("NA", activateModel.BagId);
+            var bag = await bagRepository.GetUnusedAsync(activateModel.BagId);
             if (bag == null)
             {
                 return Ok(new ActivateResultModel
@@ -83,15 +83,18 @@ namespace PantAPI.Controllers
         [HttpGet]
         [Route("Generate")]
         [ProducesResponseType(typeof(string), 200)]
-        public ActionResult Generate(string qrCode)
+        public async Task<ActionResult> Generate()
         {
+            var bagId = Guid.NewGuid().ToString();
+
             var generator = new QRCoder.QRCodeGenerator();
-            var qRCodeData = generator.CreateQrCode(qrCode, QRCoder.QRCodeGenerator.ECCLevel.Q);
+            var qRCodeData = generator.CreateQrCode(bagId, QRCoder.QRCodeGenerator.ECCLevel.Q);
             var qRCoder = new QRCoder.SvgQRCode(qRCodeData);
             var resultat = qRCoder.GetGraphic(5);
+
+            await bagRepository.AddNewAsync(bagId);
+
             return Ok(resultat);
         }
-
-
     }
 }

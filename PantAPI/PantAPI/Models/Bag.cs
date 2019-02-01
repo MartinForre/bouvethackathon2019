@@ -7,6 +7,7 @@ namespace PantAPI.Models
     {
         public Bag(string userId, string bagId) : base(userId, bagId)
         {
+            CreatedDate = DateTime.UtcNow;
         }
 
         public Bag()
