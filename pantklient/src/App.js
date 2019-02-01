@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { HashRouter as Router, Route, Link } from 'react-router-dom'
+import { HashRouter as Router, Route, Link, Redirect } from 'react-router-dom'
 import './App.css';
 import HomeComponent from './components/HomeComponent';
 import AboutComponent from './components/AboutComponent';
-import TeamComponent from './components/TeamComponent';
+import RegisterBagComponent from './components/RegisterBagComponent';
+import QrScannerComponent from './components/QrScannerComponent';
 
 class App extends Component {
   render() {
@@ -15,16 +16,19 @@ class App extends Component {
                         <Link to="/"> Home </Link>
                     </li>
                     <li>
-                        <Link to="/about"> About </Link>
+                        <Link to="/scan"> Scanner </Link>
                     </li>
                     <li>
-                        <Link to="/team"> Team </Link>
+                        <Link to="/about"> About </Link>
                     </li>
+
                 </ul>
 
                 <Route exact path='/' component={HomeComponent}></Route>
                 <Route exact path='/about' component={AboutComponent}></Route>
-                <Route exact path='/team' component={TeamComponent}></Route>
+                <Route exact path='/scan' component={QrScannerComponent}></Route>
+                <Route exact path='/registerBag/:id' component={RegisterBagComponent}></Route>
+                <Redirect to="/" />
 
             </div>
         </Router>
