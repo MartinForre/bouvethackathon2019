@@ -55,7 +55,7 @@ class RegisterBagComponent extends Component {
           };
           
   
-          fetch('http://bouvet-panther-api.azurewebsites.net/api/QR/Activate', options)
+          fetch('https://bouvet-panther-api.azurewebsites.net/api/QR/Activate', options)
             .then(res => res.json())
             .then(res => this.handleRespone(res))
             .then(res => console.log(res));
