@@ -12,7 +12,7 @@ export default () => (
     <Route
       exact
       path='/'
-      component={HomeComponent}
+      component={QrScannerComponent}
     />
     <Route
       path='/about'
@@ -21,10 +21,6 @@ export default () => (
     <Route
       path='/registerBag/:id'
       component={RegisterBagComponent}
-    />
-    <Route
-      path='/scan'
-      component={QrScannerComponent}
     />
   </Switch>
 );
