@@ -22,7 +22,7 @@ steps:
 - task: ArchiveFiles@2
   inputs:
     rootFolderOrFile: 'pantklient/build' 
-    includeRootFolder: true
+    includeRootFolder: false
     archiveFile: 'pantklient/dist/pantklient-build.zip'
     archiveType: zip
     replaceExistingArchive: true
