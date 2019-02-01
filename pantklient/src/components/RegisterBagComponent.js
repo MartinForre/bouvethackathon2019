@@ -39,12 +39,13 @@ class RegisterBagComponent extends Component {
             method: "POST",
             mode: "no-cors"
         })
-            .then(response => that.handleRespone(response))
-            .catch(error => console.log(error)) //TODO handle error riktig.
+        .then(response => that.handleRespone(response))
+        .catch(error => console.log(error)) //TODO handle error riktig.
 
     }
 
     handleRespone(response){
+        console.log((response))
         //TODO gjør noe med responsen her!
         // vise godkjent / ikke godkjent, bla bla
     }
@@ -55,11 +56,11 @@ class RegisterBagComponent extends Component {
 
 
         return(
-            <div>
+            <div className="App">
                 <h1>REGISTER BAG</h1>
                 <p>Din pose har id: {this.state.bagId}</p>
 
-                {this.state.isBagIdValidated ? <p>Bag response: {this.state.validationResponse} </p> : <FaRecycle/>}
+                {this.state.isBagIdValidated ? <p>Bag response: {this.state.validationResponse} </p> : <FaRecycle className="App-logo"/>}
             </div>
         )
     }
