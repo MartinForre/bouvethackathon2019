@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using PantAPI.Models;
 using PantAPI.Repositories;
+using System;
+using System.Threading.Tasks;
 
 namespace PantAPI.Controllers
 {
@@ -17,35 +15,6 @@ namespace PantAPI.Controllers
         public QRController(BagRepository bagRepository)
         {
             this.bagRepository = bagRepository;
-        }
-
-
-        [HttpGet]
-        [Route("tull")]
-        public async Task<Bag> Tull([FromServices] BagRepository bagRepository)
-        {
-            var bagId = "d9c47d23-f35d-41e4-9652-99bd8609534d";
-            var userId = "94d0266d-b4c0-47f2-88fd-d25ec8829915";
-            
-            return await bagRepository.GetAsync(userId, bagId);
-        }
-
-        // GET api/values
-        [HttpPost]
-        [Route("Add")]
-        [ProducesResponseType(typeof(string), 200)]
-        public ActionResult Add()
-        {
-            var bagid = Guid.NewGuid().ToString();
-            var url = "https://bouvet-panther.azurewebsites.net/activate/" +bagid ;
-
-            var bag = new Bag
-            {
-                CreatedDate = DateTime.UtcNow,
-                Status = BagStatus.Created
-            };
-
-            return Ok(url);
         }
 
         [HttpPost]
@@ -71,7 +40,7 @@ namespace PantAPI.Controllers
 
             bag.PartitionKey = activateModel.UserId;
             await bagRepository.AddOrUpdateAsync(bag);
-            
+
             return Ok(new ActivateResultModel
             {
                 Status = ActivativateStatus.OK,
@@ -86,13 +55,22 @@ namespace PantAPI.Controllers
         public async Task<ActionResult> Generate()
         {
             var bagId = Guid.NewGuid().ToString();
+            var baseUrl = "https://bouvet-panther.azurewebsites.net/#/registerBag/";
+            var qrCode = baseUrl + bagId;
 
             var generator = new QRCoder.QRCodeGenerator();
-            var qRCodeData = generator.CreateQrCode(bagId, QRCoder.QRCodeGenerator.ECCLevel.Q);
+            var qRCodeData = generator.CreateQrCode(qrCode, QRCoder.QRCodeGenerator.ECCLevel.Q);
             var qRCoder = new QRCoder.SvgQRCode(qRCodeData);
             var resultat = qRCoder.GetGraphic(5);
 
-            await bagRepository.AddNewAsync(bagId);
+            try
+            {
+                await bagRepository.AddNewAsync(bagId);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
 
             return Ok(resultat);
         }
