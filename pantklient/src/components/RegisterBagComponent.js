@@ -23,7 +23,7 @@ class RegisterBagComponent extends Component {
     checkOrGetUserId() {
         let id = localStorage.getItem('uid');
         if(id == null){
-            fetch('http://bouvet-panther-api.azurewebsites.net/api/User/Register', {
+            fetch('https://bouvet-panther-api.azurewebsites.net/api/User/Register', {
                 method: "GET",
                 mode: "no-cors"
             }).then(response => response.json())
@@ -35,7 +35,7 @@ class RegisterBagComponent extends Component {
     }
 
     verifyBagId() {
-        fetch('http://bouvet-panther-api.azurewebsites.net/api/QR/Activate?qrCode=' + this.state.bagId + '&userid=' + this.state.uid, {
+        fetch('https://bouvet-panther-api.azurewebsites.net/api/QR/Activate?qrCode=' + this.state.bagId + '&userid=' + this.state.uid, {
             method: "POST",
             mode: "no-cors"
         }).then(response => this.handleRespone(response))
