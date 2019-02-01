@@ -54,7 +54,7 @@ namespace PantAPI
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "PantAPI V1");
             });
 
-            app.UseCors(builder => builder.WithOrigins("*.azurewebsites.net", "localhost"));
+            app.UseCors(builder => builder.WithOrigins("*"));
 
 
             app.UseHttpsRedirection();
