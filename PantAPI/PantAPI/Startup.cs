@@ -49,7 +49,7 @@ namespace PantAPI
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/swagger/v1/swagger.json", "PantAPI V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "PantAPI V1");
             });
 
                 app.UseCors(builder =>
