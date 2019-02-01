@@ -16,17 +16,13 @@ class App extends Component {
                         <Link to="/"> Home </Link>
                     </li>
                     <li>
-                        <Link to="/scan"> Scanner </Link>
-                    </li>
-                    <li>
                         <Link to="/about"> About </Link>
                     </li>
 
                 </ul>
 
-                <Route exact path='/' component={HomeComponent}></Route>
+                <Route exact path='/' component={QrScannerComponent}></Route>
                 <Route exact path='/about' component={AboutComponent}></Route>
-                <Route exact path='/scan' component={QrScannerComponent}></Route>
                 <Route exact path='/registerBag/:id' component={RegisterBagComponent}></Route>
                 <Redirect to="/" />
 

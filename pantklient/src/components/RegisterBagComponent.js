@@ -23,9 +23,27 @@ class RegisterBagComponent extends Component {
     verifyBagId() {
         //TODO koble til ekte API, mock for nå
         var that = this;
+
+        const validationResponses = ['Godkjent', 'Ikke godkjent', 'Brukt'];
+
         setTimeout(function(){
-            that.setState({isBagIdValidated: true, validationResponse: "Godkjent"})
-        }, Math.random()*1000 * 5);
+            that.setState({isBagIdValidated: true, validationResponse: validationResponses[Math.floor(Math.random() * validationResponses.length)  ]})
+
+            if(that.state.validationResponse === 'Godkjent'){
+                that.checkOrGetUserId();
+            }
+
+        }, Math.random()*1000 * 7);
+    }
+
+    checkOrGetUserId() {
+        const id = localStorage.getItem('uid');
+        if(id == null){
+            //TODO fetch user ID from API and store to localstorage.
+
+            //mock
+            localStorage.setItem('uid', 123123131213131);
+        }
     }
 
 
