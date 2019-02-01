@@ -31,6 +31,7 @@ namespace PantAPI
             {
                 c.SwaggerDoc("v1", new Info { Title = "PantAPI", Version = "v3" });
             });
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,6 +51,9 @@ namespace PantAPI
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "PantAPI V3");
             });
+
+                app.UseCors(builder =>
+                    builder.WithOrigins("*.azurewebsites.net"));
 
 
             app.UseHttpsRedirection();
