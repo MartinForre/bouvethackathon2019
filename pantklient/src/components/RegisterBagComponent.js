@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { FaRecycle } from 'react-icons/fa';
 
 class RegisterBagComponent extends Component {
 
@@ -29,20 +30,15 @@ class RegisterBagComponent extends Component {
 
 
     render(){
-
-
-
         return(
             <div>
                 <h1>REGISTER BAG</h1>
                 <p>Din pose har id: {this.state.bagId}</p>
 
-                {this.state.isBagIdValidated ? <p>Bag response: {this.state.validationResponse} </p> : <p>**PROGRESS SPINNER**</p>}
+                {this.state.isBagIdValidated ? <p>Bag response: {this.state.validationResponse} </p> : <FaRecycle/>}
             </div>
         )
     }
-
-
 }
 
 export default RegisterBagComponent;
