@@ -28,9 +28,11 @@ class RegisterBagComponent extends Component {
                 method: "GET",
             }).then(response => response.json())
             .then(response => {
-                this.setState({uid: response.uid})
                 localStorage.setItem('uid', response.uid)
-                this.verifyBagId()
+                this.setState(
+                    {uid: response.uid},
+                    () => this.verifyBagId()
+                )
             })
             .catch(error => console.log(error)) //TODO handle error riktig.
         } else {
