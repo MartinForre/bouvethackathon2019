@@ -43,7 +43,7 @@ namespace PantAPI.Controllers
         [HttpPost]
         [Route("Activate")]
         [ProducesResponseType(typeof(ActivateResultModel), 200)]
-        public ActionResult Activate([FromBody] ActivateModel activateModel)
+        public ActionResult Activate(ActivateModel activateModel)
         {
 
             
