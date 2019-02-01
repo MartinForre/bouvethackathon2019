@@ -19,7 +19,14 @@ steps:
   workingDirectory: pantklient
 - script: npm run build
   workingDirectory: pantklient
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: 'pantklient/build' 
+    includeRootFolder: true
+    archiveFile: 'pantklient/dist/pantklient-build.zip'
+    archiveType: zip
+    replaceExistingArchive: true
 - task: PublishPipelineArtifact@0
   inputs:
     artifactName: 'pantklient'
-    targetPath: 'pantklient/build'
+    targetPath: 'pantklient/dist'
