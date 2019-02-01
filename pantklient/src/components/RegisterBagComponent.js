@@ -26,11 +26,14 @@ class RegisterBagComponent extends Component {
         //hack
         id=12312312;
         if(id == null){
-            fetch('https://bouvet-panther-api.azurewebsites.net/api/User/Register', {
+            fetch('http://bouvet-panther-api.azurewebsites.net/api/User/Register', {
                 method: "GET",
                 mode: "no-cors"
-            }).then(response => response.json())
-                .then(response => this.setState({uid: response.uid}))
+            }).then(response => response.text())
+                .then(response => {
+                    console.log(response)
+                    this.setState({uid: response.uid})
+                })
                 .catch(error => console.log(error)) //TODO handle error riktig.
         }else{
             this.setState({uid: id})
@@ -38,8 +41,7 @@ class RegisterBagComponent extends Component {
     }
 
     verifyBagId() {
-        this.handleRespone({status: 200, validationResponse: 'verified'});
-    /*    fetch('http://bouvet-panther-api.azurewebsites.net/api/QR/Activate?qrCode=' + this.state.bagId + '&userid=' + this.state.uid, {
+        fetch('http://bouvet-panther-api.azurewebsites.net/api/QR/Activate?qrCode=' + this.state.bagId + '&userid=' + this.state.uid, {
             method: "POST",
             mode: "no-cors"
         }).then(response => response.json())
