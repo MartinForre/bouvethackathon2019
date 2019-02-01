@@ -1,35 +1,34 @@
 import React, { Component } from 'react';
-import { HashRouter as Router, Route, Link, Redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import './App.css';
-import HomeComponent from './components/HomeComponent';
-import AboutComponent from './components/AboutComponent';
-import RegisterBagComponent from './components/RegisterBagComponent';
-import QrScannerComponent from './components/QrScannerComponent';
+
+import Routes from './containers/navigation';
 
 class App extends Component {
+
+	renderHeader = () => (
+		<div>
+			<ul>
+				<li>
+					<Link to="/"> Home </Link>
+				</li>
+				<li>
+					<Link to="/scan"> Scanner </Link>
+				</li>
+				<li>
+					<Link to="/about"> About </Link>
+				</li>
+			</ul>
+		</div>
+	);
+
   render() {
-    return (
-        <Router>
-            <div>
-                <nav>
-                    <ul>
-                        <li>
-                            <Link to="/"> Home </Link>
-                        </li>
-                        <li>
-                            <Link to="/about"> About </Link>
-                        </li>
-                    </ul>
-                </nav>
-
-                <Route exact path='/' component={QrScannerComponent}></Route>
-                <Route exact path='/about' component={AboutComponent}></Route>
-                <Route exact path='/registerBag/:id' component={RegisterBagComponent}></Route>
-                <Redirect to="/" />
-
-            </div>
-        </Router>
-    );
+		return (
+			<div>
+				{this.renderHeader()}
+				<Routes />
+			</div>
+		);
   }
 }
 
