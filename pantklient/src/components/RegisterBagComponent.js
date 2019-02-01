@@ -26,7 +26,7 @@ class RegisterBagComponent extends Component {
         //hack
         id=12312312;
         if(id == null){
-            fetch('http://bouvet-panther-api.azurewebsites.net/api/User/Register', {
+            fetch('https://bouvet-panther-api.azurewebsites.net/api/User/Register', {
                 method: "GET",
                 mode: "no-cors"
             }).then(response => response.json())

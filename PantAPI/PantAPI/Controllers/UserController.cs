@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PantAPI.Controllers
 {
@@ -16,9 +13,7 @@ namespace PantAPI.Controllers
         public ActionResult Register()
         {
             string id = Guid.NewGuid().ToString();
-            return Ok(id);
+            return Ok( new { uid = id });
         }
-
-
     }
 }
