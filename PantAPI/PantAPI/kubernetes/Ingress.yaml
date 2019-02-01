@@ -18,11 +18,7 @@ spec:
       - path: /
         backend:
           serviceName: pant-api
-<<<<<<< HEAD
           servicePort: 5000
-=======
-          servicePort: 80
->>>>>>> 0d52fd8... added k8s config and dockerfile
   tls:
     - hosts:
       - #{NAMESPACE}#-api.bouvetapps.io
