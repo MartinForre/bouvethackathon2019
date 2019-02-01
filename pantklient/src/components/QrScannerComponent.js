@@ -15,6 +15,10 @@ class QrScannerComponent extends Component {
             this.setState({
                 result: data
             });
+
+            // TODO validere at det er en gyldig URL til godkjent domene etc.
+
+            document.location.href = data;
         }
     }
     handleError(err) {
@@ -23,13 +27,14 @@ class QrScannerComponent extends Component {
     render() {
         return (
             <div>
+                <p>{this.state.result}</p>
                 <QrReader
                     delay={this.state.delay}
                     onError={this.handleError}
                     onScan={this.handleScan}
-                    style={{ width: "100%" }}
+                    style={{ width: "50%" }}
                 />
-                <p>{this.state.result}</p>
+
             </div>
         );
     }
