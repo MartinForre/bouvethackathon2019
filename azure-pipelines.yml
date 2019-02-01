@@ -32,3 +32,14 @@ steps:
     publishLocation: Container
     artifactName: 'pantklient'
     targetPath: 'pantklient/dist'
+- task: DotNetCoreInstaller@0
+  inputs:
+    version: '2.1.300'
+    packageType: sdk
+- script: dotnet restore
+  workingDirectory: PantAPI
+- script: dotnet build
+  workingDirectory: PantAPI
+- script: dotnet publish --output $(Build.ArtifactStagingDirectory)
+  workingDirectory: PantAPI
+- task: PublishBuildArtifacts@1
