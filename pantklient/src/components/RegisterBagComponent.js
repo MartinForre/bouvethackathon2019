@@ -43,7 +43,8 @@ class RegisterBagComponent extends Component {
     verifyBagId() {
    
         const myPost = {
-            validationResponse: 'OK'
+            BagId: 123,
+            UserId: 323
           }
           
           const options = {
@@ -82,7 +83,7 @@ class RegisterBagComponent extends Component {
         // vise godkjent / ikke godkjent, bla bla
         console.log(response);
         this.setState({
-            validationResponse: response.validationResponse
+            validationResponse: response.status
         });
     }
 
