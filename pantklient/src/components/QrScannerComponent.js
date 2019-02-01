@@ -6,7 +6,7 @@ class QrScannerComponent extends Component {
         super(props);
         this.state = {
             delay: 300,
-            result: "No result"
+            result: ""
         };
         this.handleScan = this.handleScan.bind(this);
     }
@@ -27,13 +27,15 @@ class QrScannerComponent extends Component {
     render() {
         return (
             <div>
-                <p>{this.state.result}</p>
-                <QrReader
-                    delay={this.state.delay}
-                    onError={this.handleError}
-                    onScan={this.handleScan}
-                    style={{ width: "100%" }} //TODO seriøst fiks denne. ser stygg ut
-                />
+                <div>{this.state.result}</div>
+                <div id="qr-container">
+                    <QrReader
+                        delay={this.state.delay}
+                        onError={this.handleError}
+                        onScan={this.handleScan}
+                        style={{ width: "100%" }} //TODO seriøst fiks denne. ser stygg ut
+                    />
+                </div>
 
             </div>
         );

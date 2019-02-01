@@ -29,7 +29,7 @@ namespace PantAPI
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "PantAPI", Version = "v3" });
+                c.SwaggerDoc("v3", new Info { Title = "PantAPI", Version = "v3" });
             });
             services.AddCors();
         }
@@ -49,7 +49,7 @@ namespace PantAPI
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "PantAPI V3");
+                c.SwaggerEndpoint("/swagger/v3/swagger.json", "PantAPI V3");
             });
 
                 app.UseCors(builder =>

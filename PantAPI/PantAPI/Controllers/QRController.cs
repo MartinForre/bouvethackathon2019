@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using PantAPI.Models;
 
 namespace PantAPI.Controllers
 {
@@ -16,8 +17,16 @@ namespace PantAPI.Controllers
         [ProducesResponseType(typeof(string), 200)]
         public ActionResult Add()
         {
-            var url = "https://bouvet-panther.azurewebsites.net/activate/" + Guid.NewGuid().ToString();
-            //db-add.
+            var bagid = Guid.NewGuid().ToString();
+            var url = "https://bouvet-panther.azurewebsites.net/activate/" +bagid ;
+
+            var bag = new Bag
+            {
+                BagCreatedDate = DateTime.UtcNow,
+                BagId = bagid,
+                Status = BagStatus.Created
+            };
+
             return Ok(url);
         }
 
