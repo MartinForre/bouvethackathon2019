@@ -11,15 +11,16 @@ class App extends Component {
     return (
         <Router>
             <div>
-                <ul>
-                    <li>
-                        <Link to="/"> Home </Link>
-                    </li>
-                    <li>
-                        <Link to="/about"> About </Link>
-                    </li>
-
-                </ul>
+                <nav>
+                    <ul>
+                        <li>
+                            <Link to="/"> Home </Link>
+                        </li>
+                        <li>
+                            <Link to="/about"> About </Link>
+                        </li>
+                    </ul>
+                </nav>
 
                 <Route exact path='/' component={QrScannerComponent}></Route>
                 <Route exact path='/about' component={AboutComponent}></Route>

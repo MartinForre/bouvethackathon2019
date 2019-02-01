@@ -22,6 +22,36 @@
   color: #61dafb;
 }
 
+nav{
+  height: 50px;
+  background: #333;
+  top: 0;
+  position: absolute;
+  left: 0;
+  right: 0;
+  color: #fff;
+}
+
+nav a{
+  color: #fff;
+}
+
+nav ul{
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: stretch;
+  align-content: stretch;
+}
+
+nav li{
+  padding: 0 20px;
+}
+
+
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

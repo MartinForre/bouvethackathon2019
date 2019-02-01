@@ -9,12 +9,14 @@ class RegisterBagComponent extends Component {
         this.state = {
             bagId: null,
             isBagIdValidated: false,
-            validationResponse: ''
+            validationResponse: '',
+            uid: null
         }
     }
 
     componentDidMount() {
         const  { id } = this.props.match.params;
+        this.checkOrGetUserId();
         this.setState({bagId:id});
 
         this.verifyBagId();
@@ -26,6 +28,12 @@ class RegisterBagComponent extends Component {
 
         const validationResponses = ['Godkjent', 'Ikke godkjent', 'Brukt'];
 
+      /*  fetch('http://bouvet-panther-api.azurewebsites.net/api/QR/Activate?qrCode=' + this.state.bagId + '&userid=' + this.state.uid)
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch(error => console.log(error));
+return;*/
+
         setTimeout(function(){
             that.setState({isBagIdValidated: true, validationResponse: validationResponses[Math.floor(Math.random() * validationResponses.length)  ]})
 
@@ -33,17 +41,19 @@ class RegisterBagComponent extends Component {
                 that.checkOrGetUserId();
             }
 
-        }, Math.random()*1000 * 7);
+        }, Math.random()*1000 * 4);
     }
 
     checkOrGetUserId() {
-        const id = localStorage.getItem('uid');
+        let id = localStorage.getItem('uid');
         if(id == null){
             //TODO fetch user ID from API and store to localstorage.
-
             //mock
-            localStorage.setItem('uid', 123123131213131);
+            const id = 123141231
         }
+
+        localStorage.setItem('uid', id);
+        this.setState({uid: id});
     }
 
 
