@@ -19,7 +19,7 @@ class Login extends Component {
     const password = this.passwordInput.value;
         let userData = {
             password: this.passwordInput.value,
-            email: this.emailInput.value,
+            username: this.emailInput.value,
         }
 
         const options = {

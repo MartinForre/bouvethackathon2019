@@ -22,36 +22,12 @@ class RegisterBagComponent extends Component {
         //this.checkOrGetUserId();
     }
 
-    checkOrGetUserId() {
-        let id = localStorage.getItem('uid');
-
-        if(id == null){
-            fetch('https://bouvet-panther-api.azurewebsites.net/api/User/Register', {
-                method: "GET",
-            }).then(response => response.json())
-            .then(response => {
-                localStorage.setItem('uid', response.uid)
-                this.setState(
-                    {uid: response.uid},
-                    () => this.verifyBagId()
-                )
-            })
-            .catch(error => console.log(error)) //TODO handle error riktig.
-        } else {
-            this.setState(
-                {uid: id},
-                () => this.verifyBagId()
-            )
-        }
-    }
 
     verifyBagId() {
         const myPost = {
             BagId: this.state.bagId,
-            UserId: this.state.uid
-            
+            UserId: this.state.uid   
         }
-          
         const options = {
             method: 'POST',
             mode: 'cors',
@@ -65,7 +41,7 @@ class RegisterBagComponent extends Component {
         fetch('https://bouvet-panther-api.azurewebsites.net/api/QR/Activate', options)
             .then(res => {
                 console.log(res)
-                localStorage.setItem('token', res.headers.get('x-plukk-token'));
+                localStorage.setItem('token', res.headers.get('x-plukk-token')); //TODO doesnt work
                 return res.json();
             })
             .then(res => this.handleRespone(res))
@@ -83,9 +59,7 @@ class RegisterBagComponent extends Component {
     render(){
 
         if(this.state.uid == null){
-            return (<div>
-                <FaRecycle/>
-            </div>);
+            return <FaRecycle className="App-logo"/>
         }
 
         return(
@@ -94,7 +68,7 @@ class RegisterBagComponent extends Component {
                     <VerifiedQrComponent
                         validationResponse= {this.state.validationResponse}/>
                 :
-                <FaRecycle className="App-logo"/>}
+                    <FaRecycle className="App-logo"/>}
             </div>
         )
     }
