@@ -16,10 +16,10 @@ class Login extends Component {
   authWithUsernamePassword(event) {
     event.preventDefault();
     const username = this.usernameInput.value;
-    const password = this.passwordInput.value;
+    const  password = this.passwordInput.value;
         let userData = {
-            password: this.passwordInput.value,
-            username: this.usernameInput.value,
+            password: password,
+            username: username,
         }
 
         const options = {
@@ -43,6 +43,9 @@ class Login extends Component {
     localStorage.setItem('name', response.name)
     localStorage.setItem('email', response.email)
     localStorage.setItem('token', response.token)
+    this.setState({
+      redirect:true
+    })
 }
 
   render() {
