@@ -52,6 +52,7 @@ namespace PantAPI
         {
             var newToken = tokenRepository.GenerateNewToken();
             await tokenRepository.AddOrUpdateAsync(new UserToken("Tokens", newToken, userId));
+            await userRepository.AddOrUpdateAsync(new UserProfile(userId));
 
             if (httpContextAccessor.HttpContext.Request.Headers.ContainsKey("Authorization"))
             {

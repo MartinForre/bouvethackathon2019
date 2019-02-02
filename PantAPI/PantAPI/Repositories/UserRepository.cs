@@ -23,6 +23,12 @@ namespace PantAPI.Repositories
                 userId = Guid.NewGuid().ToString();
             }
 
+            var existingEmail = await GetWhereAsync("Users", query => query.Where(TableQuery.GenerateFilterCondition("Email", QueryComparisons.Equal, email)));
+            if(existingEmail.Any())
+            {
+                throw new InvalidOperationException($"Email [{email}] already exist");
+            }
+
             var user = new UserProfile(userId)
             {
                 Email = email,
