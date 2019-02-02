@@ -33,7 +33,7 @@ class QrScannerComponent extends Component {
                         delay={this.state.delay}
                         onError={this.handleError}
                         onScan={this.handleScan}
-                        style={{ width: "100%" }} //TODO seriøst fiks denne. ser stygg ut
+                        style={{ width: "100%", height: "100%" }} //TODO seriøst fiks denne. ser stygg ut
                     />
                 </div>
 

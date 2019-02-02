@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 // Pages
-import AboutComponent from '../components/AboutComponent/AboutComponent';
+import ProfileComponent from '../components/AboutComponent/ProfileComponent';
 import RegisterBagComponent from '../components/RegisterBagComponent/RegisterBagComponent';
 import QrScannerComponent from '../components/QrScannerComponent/QrScannerComponent';
 import Login from '../components/Login/Login';
@@ -15,8 +15,8 @@ export default () => (
       component={QrScannerComponent}
     />
     <Route
-      path='/about'
-      component={AboutComponent}
+      path='/profile'
+      component={ProfileComponent}
     />
     <Route
       path='/login'
