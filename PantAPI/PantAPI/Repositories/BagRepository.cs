@@ -42,12 +42,25 @@ namespace PantAPI.Repositories
             return await GetAsync(NOT_ASSIGNED_PARTITION_KEY, bagId);
         }
 
+
         public async Task<List<Bag>> GetBagsForUserAsync(string userId)
         {
-            var operation = new TableQuery<Bag>().Where(TableQuery.GenerateFilterCondition("UserId", QueryComparisons.Equal, userId));
+            var query = new TableQuery<Bag>().Where(TableQuery.GenerateFilterCondition(nameof(Bag.PartitionKey), QueryComparisons.Equal, userId));
             var table = await GetTableAsync();
-            var result = await table.ExecuteQuerySegmentedAsync<Bag>(operation, new TableContinuationToken());
-            return result.ToList();
+
+            List<Bag> results = new List<Bag>();
+            TableContinuationToken continuationToken = null;
+            do
+            {
+                TableQuerySegment<Bag> queryResults =
+                    await table.ExecuteQuerySegmentedAsync(query, continuationToken);
+
+                continuationToken = queryResults.ContinuationToken;
+                results.AddRange(queryResults.Results);
+
+            } while (continuationToken != null);
+
+            return results;
         }
 
         public async Task<Bag> GetAsync(string userId, string bagId)
