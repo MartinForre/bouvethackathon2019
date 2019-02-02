@@ -6,7 +6,9 @@ class ProfileComponent extends Component {
     constructor(props){
         super(props);
         this.state = {
-            redirect: false
+            redirect: false,
+            email:null,
+            name:null,
         }
     }
 
@@ -43,7 +45,6 @@ class ProfileComponent extends Component {
             .then(res => this.handleUpdateResponse(res))
             .catch(error => console.log(error));
         console.log(userData);
-        this.setState({redirect: true})
     }
 
     handleUpdateResponse(response) {
@@ -51,8 +52,12 @@ class ProfileComponent extends Component {
         localStorage.setItem('name', response.name)
         localStorage.setItem('email', response.email)
         localStorage.setItem('token', response.token)
+        this.setState({
+            email:localStorage.getItem('email'),
+            name:localStorage.getItem('name')
+        })
     }
-    
+
     render(){
         
         if(this.state.redirect) {
@@ -68,13 +73,13 @@ class ProfileComponent extends Component {
                     type="text"
                     placeholder="Ola"
                     ref={input => this.nameInput = input}
-                    value={localStorage.getItem('name')}
+                    value={this.state.name}
                 />
                 <input
                     type="text"
                     placeholder="E-post"
                     ref={input => this.emailInput = input}
-                    value={localStorage.getItem('email')}
+                    value={this.state.email}
                 />
                 <input 
                     type="text"
