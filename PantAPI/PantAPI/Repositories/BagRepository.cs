@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Table;
@@ -38,6 +39,12 @@ namespace PantAPI.Repositories
         public async Task<Bag> GetUnusedAsync(string bagId)
         {
             return await GetAsync(NOT_ASSIGNED_PARTITION_KEY, bagId);
+        }
+
+        public async Task<List<Bag>> GetBagsForUserAsync(string userId)
+        {
+            //TODO: FixDatabaseQuery;
+            return new List<Bag>();
         }
 
         public async Task<Bag> GetAsync(string userId, string bagId)
