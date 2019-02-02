@@ -20,7 +20,7 @@ class HomeComponent extends Component {
         if(!localStorage.getItem('uid'))
             return;
 
-        fetch(`https://bouvet-panther-api.azurewebsites.net/api/user/balance?${this.state.uid}`)
+        fetch(`https://bouvet-panther-api.azurewebsites.net/api/user/balance?userId=${this.state.uid}`)
             .then(response => response.json())
             .then(response => this.setState({balance: response.balance}))
             .catch(error => console.log(error))
@@ -31,7 +31,7 @@ class HomeComponent extends Component {
         return (
             <div>
                 <h2>Home</h2>
-                <div> Din plukkesaldo: <strong>{this.getBalance()}</strong> kroner </div>
+                <div> Din plukkesaldo: <strong>{this.state.balance}</strong> kroner </div>
 
 
                 <p>
