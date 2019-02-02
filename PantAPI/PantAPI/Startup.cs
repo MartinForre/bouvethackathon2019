@@ -57,7 +57,6 @@ namespace PantAPI
                 builder.AllowAnyOrigin()
                        .AllowAnyMethod()
                        .AllowAnyHeader()
-                       .WithHeaders("x-plukk-token")
                        .WithExposedHeaders("x-plukk-token"));
 
             app.UseHttpsRedirection();
