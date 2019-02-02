@@ -19,7 +19,7 @@ namespace PantAPI.Models
         public DateTime CreatedDate { get; set; }
         public DateTime? ActivatedDate { get; set; }
         public DateTime? ReceiveDate { get; set; }
-
+         
         public double? Value { get; set; } = 0;
 
         public  double? Weight { get; set; }

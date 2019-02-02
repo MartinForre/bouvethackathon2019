@@ -15,7 +15,7 @@ namespace PantAPI.Models
     {
         public DateTime Registred { get; set; }
         public DateTime? Received { get; set; }
-        public double Value { get; set; }
+        public double? Value { get; set; }
         public double? Weight { get; set; }
     }
 
