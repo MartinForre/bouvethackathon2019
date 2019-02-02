@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PantAPI.Models;
 using System;
 
 namespace PantAPI.Controllers
@@ -14,6 +15,18 @@ namespace PantAPI.Controllers
         {
             string id = Guid.NewGuid().ToString();
             return Ok( new { uid = id });
+        }
+
+        [HttpGet]
+        [Route("Balance")]
+        [ProducesResponseType(typeof(BalanceResultModel), 200)]
+        public ActionResult Balance(string userId)
+        {
+            return Ok(new BalanceResultModel
+            {
+
+                Balance = 0
+            });
         }
     }
 }
