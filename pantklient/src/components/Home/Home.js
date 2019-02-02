@@ -29,7 +29,7 @@ class HomeComponent extends Component {
         fetch(`https://bouvet-panther-api.azurewebsites.net/api/user/balance?userId=${this.state.uid}`, options)
             .then(response => response.json())
             .then(response => {
-                this.setState({balance: response.balance, details: response.details}, this.calculateTotalPickedWeight())
+                this.setState({balance: response.balance, details: response.details}, this.calculateTotalPickedWeight)
             })
             .catch(error => console.log(error))
     }
@@ -38,7 +38,7 @@ class HomeComponent extends Component {
         return localStorage.getItem('uid') != null;
     }
 
-    calculateTotalPickedWeight() {
+    calculateTotalPickedWeight = () => {
         let initalWeightValue = 0;
         let totalWeight = this.state.details.reduce(
             (accumulator, currentValue) => accumulator + currentValue.weight,
