@@ -9,9 +9,11 @@ namespace PantAPI.Repositories
     public class UserRepository : BaseRepository<UserProfile>
     {
         const string TABLE_NAME = "users";
+        private readonly TokenRepository tokenRepository;
 
-        public UserRepository(string connectionString) : base(TABLE_NAME, connectionString)
+        public UserRepository(string connectionString, TokenRepository tokenRepository) : base(TABLE_NAME, connectionString)
         {
+            this.tokenRepository = tokenRepository;
         }
 
         public async Task<UserProfile> RegisterUser(string userId, string email, string name, string password)
@@ -24,7 +26,6 @@ namespace PantAPI.Repositories
             var user = new UserProfile(userId)
             {
                 Email = email,
-                Token = GetNewToken(),
                 Name = name
             };
 
@@ -32,37 +33,35 @@ namespace PantAPI.Repositories
             {
                 CreatePasswordHash(password, out byte[] passwordHash, out byte[] passwordSalt);
 
-                user.PasswordHash = System.Text.Encoding.Default.GetString(passwordHash);
-                user.PasswordSalt = System.Text.Encoding.Default.GetString(passwordSalt);
+                user.PasswordHash = passwordHash;
+                user.PasswordSalt = passwordSalt;
             }
 
+            var token = tokenRepository.GenerateNewToken();
+            await tokenRepository.AddOrUpdateAsync(new UserToken("Tokens", token, user.UserId));
             var addedUser = await AddOrUpdateAsync(user);
 
             return addedUser;
         }
 
-        private string GetNewToken()
+        public async Task<UserToken> GetTokenForUserAsync(string userId)
         {
-            var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(Guid.NewGuid().ToString());
-            return System.Convert.ToBase64String(plainTextBytes);
+            return await tokenRepository.GetTokenForUserAsync(userId);
         }
 
         public async Task<string> AuthenticateAsync(string token)
         {
-            var users = await GetWhereAsync("Users", query =>
-                query.Where(TableQuery.GenerateFilterCondition("Token", QueryComparisons.Equal, token)));
-
-            var user = users.ToList().SingleOrDefault();
-
-            if(user == null)
+            var userToken = await tokenRepository.GetAsync("Tokens", token);
+            
+            if(userToken == null)
             {
                 return null;
             }
 
-            user.Token = GetNewToken();
-            await AddOrUpdateAsync(user);
-
-            return user.Token;
+            var newToken = tokenRepository.GenerateNewToken();
+            await tokenRepository.DeleteAsync(userToken);
+            await tokenRepository.AddOrUpdateAsync(new UserToken("Tokens", token, userToken.UserId));
+            return token;
         }
 
         public async Task<UserProfile> AuthenticateAsync(string email, string password)
@@ -71,7 +70,7 @@ namespace PantAPI.Repositories
                 return null;
 
             var users = await GetWhereAsync("Users", query => 
-            query.Where(TableQuery.GenerateFilterCondition("Email", QueryComparisons.Equal, email)));
+                query.Where(TableQuery.GenerateFilterCondition("Email", QueryComparisons.Equal, email)));
 
             var user = users.ToList().SingleOrDefault();
 
@@ -80,12 +79,19 @@ namespace PantAPI.Repositories
                 return null;
 
             // check if password is correct
-            var passwordHash = System.Text.Encoding.UTF8.GetBytes(user.PasswordHash);
-            var passwordSalt = System.Text.Encoding.UTF8.GetBytes(user.PasswordSalt);
+            var passwordHash = user.PasswordHash;
+            var passwordSalt = user.PasswordSalt;
             if (!VerifyPasswordHash(password, passwordHash, passwordSalt))
                 return null;
+            
+            var oldToken = await tokenRepository.GetTokenForUserAsync(user.UserId);
+            if (oldToken != null)
+            {
+                await tokenRepository.DeleteAsync(oldToken);
+            }
 
-            user.Token = GetNewToken();
+            var token = tokenRepository.GenerateNewToken();
+            await tokenRepository.AddOrUpdateAsync(new UserToken("Tokens", token, user.UserId));
             await AddOrUpdateAsync(user);
 
             return user;

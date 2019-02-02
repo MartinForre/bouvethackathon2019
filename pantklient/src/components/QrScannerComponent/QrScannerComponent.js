@@ -29,9 +29,9 @@ class QrScannerComponent extends Component {
     render() {
         return (
             <div id="qr-code-page">
-            <div id="plukk-logo">
-                <img src={plukk} alt=":)"/>
-            </div>
+                <div id="plukk-logo">
+                    <img src={plukk} alt=":)"/>
+                </div>
                 <div id="qr-container">
                     <QrReader
                         delay={this.state.delay}

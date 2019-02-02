@@ -26,10 +26,11 @@ namespace PantAPI
             {
                 c.SwaggerDoc("v1", new Info { Title = "PantAPI", Version = "v1" });
             });
-
+            services.AddMemoryCache();
             services.AddCors();
             services.AddTransient(s => new BagRepository(Configuration.GetValue<string>("StorageConnectionString")));
-            services.AddTransient(s => new UserRepository(Configuration.GetValue<string>("StorageConnectionString")));
+            services.AddTransient(s => new TokenRepository(Configuration.GetValue<string>("StorageConnectionString")));
+            services.AddTransient(s => new UserRepository(Configuration.GetValue<string>("StorageConnectionString"), s.GetRequiredService<TokenRepository>()));
             services.AddScoped<AuthService>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
@@ -52,7 +53,12 @@ namespace PantAPI
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "PantAPI V1");
             });
 
-            app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            app.UseCors(builder => 
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader()
+                       .WithHeaders("x-plukk-token")
+                       .WithExposedHeaders("x-plukk-token"));
 
             app.UseHttpsRedirection();
             app.UseMvc();

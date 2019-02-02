@@ -7,12 +7,12 @@ namespace PantAPI.Models
 {
     public class UserProfileApiModel
     {
-        public UserProfileApiModel(UserProfile userProfile)
+        public UserProfileApiModel(UserProfile userProfile, string token)
         {
             UserId = userProfile.UserId;
             Name = userProfile.Name;
             Email = userProfile.Email;
-            Token = userProfile.Token;
+            Token = token;
         }
 
         public string UserId { get; }

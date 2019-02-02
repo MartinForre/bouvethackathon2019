@@ -2,23 +2,21 @@
 using PantAPI.Models;
 using PantAPI.Repositories;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace PantAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-
     public class UserController: ControllerBase
     {
         private readonly UserRepository userRepository;
-        private BagRepository bagRepository;
+        private readonly AuthService authService;
 
-        public UserController(UserRepository userRepository, BagRepository bagRepository)
+        public UserController(UserRepository userRepository, AuthService authService)
         {
             this.userRepository = userRepository;
-            this.bagRepository = bagRepository;
+            this.authService = authService;
         }
 
         [HttpPost]
@@ -27,12 +25,14 @@ namespace PantAPI.Controllers
         {
             var user = await userRepository.AuthenticateAsync(model.Username, model.Password);
 
-            if(user != null)
+            if(user == null)
             {
                 return Unauthorized();
             }
 
-            return Ok(new UserProfileApiModel(user));
+            var token = await userRepository.GetTokenForUserAsync(user.UserId);
+
+            return Ok(new UserProfileApiModel(user, token?.Token));
         }
 
         [HttpPost]
@@ -41,29 +41,26 @@ namespace PantAPI.Controllers
         public async Task<ActionResult> Register([FromBody] RegisterModel model)
         {
             var registeredUser = await userRepository.RegisterUser(model.userId, model.email, model.name, model.password);
-            return Ok(new UserProfileApiModel(registeredUser));
+            var token = await userRepository.GetTokenForUserAsync(registeredUser.UserId);
+            return Ok(new UserProfileApiModel(registeredUser, token?.Token));
         }
 
-        [HttpGet]
-        [Route("Balance")]
-        [ProducesResponseType(typeof(BalanceResultModel), 200)]
-        public async Task<ActionResult> Balance(string userId)
+        [HttpPost]
+        [Route("Update")]
+        [ProducesResponseType(typeof(string), 200)]
+        public async Task<ActionResult> Update([FromBody] UpdateModel model)
         {
+            await authService.EnsureTokenAsync();
+            var user = await userRepository.GetAsync("User", model.UserId);
 
-            var bags = await bagRepository.GetBagsForUserAsync(userId);
-
-            return Ok(new BalanceResultModel
+            if (user != null)
             {
+                return Unauthorized();
+            }
 
-                Details = bags.Select(bag => new BagInfo
-                {
-                    Received = bag.ReceiveDate,
-                    Value = bag.Value,
-                    Weight = bag.Weight,
-
-                }).ToList(),
-                Balance = bags.Sum(c => c.Value)
-            });
+            var updatedUser = await userRepository.RegisterUser(model.UserId, model.Email, model.Name, model.Password);
+            var token = await userRepository.GetTokenForUserAsync(updatedUser.UserId);
+            return Ok(new UserProfileApiModel(updatedUser, token?.Token));
         }
     }
 }
