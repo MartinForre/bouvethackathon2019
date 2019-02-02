@@ -17,7 +17,7 @@ namespace PantAPI.Models
         {
         }
 
-        public string Token => PartitionKey;
+        public string Token => RowKey;
         public string UserId { get; set; }
     }
 }

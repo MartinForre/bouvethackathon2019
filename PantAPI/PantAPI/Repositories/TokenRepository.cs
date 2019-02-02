@@ -19,14 +19,14 @@ namespace PantAPI.Repositories
             return System.Convert.ToBase64String(plainTextBytes);
         }
 
-        public async Task<string> GetTokenForUserAsync(string userId)
+        public async Task<UserToken> GetTokenForUserAsync(string userId)
         {
             var tokens = await GetWhereAsync("Tokens", query =>
                 query.Where(TableQuery.GenerateFilterCondition("UserId", QueryComparisons.Equal, userId)));
 
             var token = tokens.SingleOrDefault();
 
-            return token?.Token;
+            return token;
         }
     }
 }

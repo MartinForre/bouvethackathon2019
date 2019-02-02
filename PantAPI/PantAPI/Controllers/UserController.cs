@@ -32,7 +32,7 @@ namespace PantAPI.Controllers
 
             var token = await userRepository.GetTokenForUserAsync(user.UserId);
 
-            return Ok(new UserProfileApiModel(user, token));
+            return Ok(new UserProfileApiModel(user, token?.Token));
         }
 
         [HttpPost]
@@ -42,7 +42,7 @@ namespace PantAPI.Controllers
         {
             var registeredUser = await userRepository.RegisterUser(model.userId, model.email, model.name, model.password);
             var token = await userRepository.GetTokenForUserAsync(registeredUser.UserId);
-            return Ok(new UserProfileApiModel(registeredUser, token));
+            return Ok(new UserProfileApiModel(registeredUser, token?.Token));
         }
 
         [HttpPost]
@@ -60,7 +60,7 @@ namespace PantAPI.Controllers
 
             var updatedUser = await userRepository.RegisterUser(model.UserId, model.Email, model.Name, model.Password);
             var token = await userRepository.GetTokenForUserAsync(updatedUser.UserId);
-            return Ok(new UserProfileApiModel(updatedUser, token));
+            return Ok(new UserProfileApiModel(updatedUser, token?.Token));
         }
     }
 }
