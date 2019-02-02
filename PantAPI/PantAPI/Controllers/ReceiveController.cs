@@ -49,5 +49,42 @@ namespace PantAPI.Controllers
             });
         }
 
+
+        [HttpPost]
+        [Route("Busted")]
+        [ProducesResponseType(typeof(ReceiveResultModel), 200)]
+        public async Task<ActionResult> Busted([FromBody] BustedModel receiveModel)
+        {
+            var bustedBag = await bagRepository.GetBag(receiveModel.BagId);
+            if (bustedBag == null)
+            {
+                return Ok(new ReceiveResultModel
+                {
+                    Status = ReceiveStatus.UNKNOWN,
+                    BagId = receiveModel.BagId
+                });
+            }
+
+            bustedBag.Message = "Busted!";
+            await bagRepository.AddOrUpdateAsync(bustedBag);
+
+
+
+            var bags = await bagRepository.GetBagsForUserAsync(bustedBag.UserId);
+
+            foreach(var bag in bags)
+            {
+                bag.Value = 0;
+                await bagRepository.AddOrUpdateAsync(bag);
+            }
+
+
+            return Ok(new ReceiveResultModel
+            {
+                Status = ReceiveStatus.OK,
+                BagId = bustedBag.BagId,
+            });
+        }
+
     }
 }

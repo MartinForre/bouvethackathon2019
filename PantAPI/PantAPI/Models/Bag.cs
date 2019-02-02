@@ -26,6 +26,7 @@ namespace PantAPI.Models
 
         public BagStatus Status { get; set; }
         public string ReceiveLocation { get; internal set; }
+        public string Message { get; internal set; }
     }
 
     public enum BagStatus
