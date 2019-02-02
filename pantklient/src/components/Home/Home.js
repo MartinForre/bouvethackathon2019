@@ -8,45 +8,59 @@ class HomeComponent extends Component {
 
         this.state = {
             uid: localStorage.getItem('uid'),
-            balance: 0
+            balance: 0,
+            totalWeight: 0,
+            details: []
         }
     }
 
     componentDidMount() {
-        this.getBalance();
+        this.getStatistics();
     }
 
-    getBalance() {
-        if(!localStorage.getItem('uid'))
+    getStatistics() {
+        if(!this.isLoggedIn())
             return;
 
         fetch(`https://bouvet-panther-api.azurewebsites.net/api/user/balance?userId=${this.state.uid}`)
             .then(response => response.json())
-            .then(response => this.setState({balance: response.balance}))
+            .then(response => {
+                this.setState({balance: response.balance, details: response.details}, this.calculateTotalPickedWeight())
+            })
             .catch(error => console.log(error))
     }
 
-    render(){
+    isLoggedIn() {
+        return localStorage.getItem('uid') != null;
+    }
 
+    calculateTotalPickedWeight() {
+        let initalWeightValue = 0;
+        let totalWeight = this.state.details.reduce(
+            (accumulator, currentValue) => accumulator + currentValue.weight,
+            initalWeightValue
+        )
+        this.setState({totalWeight: totalWeight});
+    }
+
+    render(){
+        if (!this.isLoggedIn()) {
+            return (
+                <div>
+                    <p>
+                        Du er ikke logget inn
+                    </p>
+                </div>
+            );
+        }
         return (
             <div>
-                <h2>Home</h2>
-                <div> Din plukkesaldo: <strong>{this.state.balance}</strong> kroner </div>
+                <div className="balance">
+                    Din plukkesaldo: <strong>{this.state.balance}</strong> kroner
+                </div>
 
-
-                <p>
-                    Din bydel har plukket 12 345 kg plast i år
-                </p>
-
-                <p>
-                    Takk for at du har plukket {this.state.balance} kg plast i år
-                    </p>
-                <p>
-                    Din bydel har plukket 12 345 kg plast i år
-                </p>
-
-                <p>
-                    Takk for at du har plukket 5,3 kg plast i år
+                <p className="totalWeight">
+                    Takk for at du har plukket {this.state.totalWeight} kg plast i år
                 </p>
             </div>
         )
