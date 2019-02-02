@@ -17,8 +17,8 @@ class RegisterComponent extends Component {
     registerUser(event) {
         event.preventDefault();
         let userData = {
-            firstname: this.firstname.value,
-            lastname: this.lastname.value,
+            name: this.nameInput.value,
+            password: this.passwordInput.value,
             email: this.email.value
         }
 
@@ -58,18 +58,18 @@ class RegisterComponent extends Component {
                             <h2>Registrer bruker</h2>
                             <input 
                                 type="text"
-                                placeholder="Fornavn"
-                                ref={input => this.firstname = input}
-                            />
-                            <input 
-                                type="text"
-                                placeholder="Etternavn"
-                                ref={input => this.lastname = input}
+                                placeholder="Ola"
+                                ref={input => this.nameInput = input}
                             />
                             <input
                                 type="email"
                                 placeholder="E-post"
                                 ref={input => this.email = input}
+                            />
+                            <input 
+                                type="text"
+                                placeholder="Passord"
+                                ref={input => this.passwordInput = input}
                             />
                             <button>Opprett bruker</button>
                             <p className="message">Har du allerede en bruker? <a href="#/login">Logg inn her</a></p>
