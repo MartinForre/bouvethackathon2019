@@ -14,8 +14,9 @@ body{
   text-align: center;
 }
 .App-logo {
-  animation: App-logo-spin infinite 2s linear; 
-  width: 5%; 
+  animation: App-logo-spin infinite 2s linear;
+  margin: auto; 
+  width: 30%; 
   height: auto;
 }
 
