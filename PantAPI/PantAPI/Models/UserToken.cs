@@ -11,13 +11,14 @@ namespace PantAPI.Models
         public UserToken(string partitionKey, string token, string userId) : base(partitionKey, token)
         {
             UserId = userId;
+            Token = token;
         }
 
         public UserToken()
         {
         }
 
-        public string Token => RowKey;
+        public string Token { get; set; }
         public string UserId { get; set; }
     }
 }
