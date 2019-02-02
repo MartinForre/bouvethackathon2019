@@ -16,8 +16,10 @@ class RegisterBagComponent extends Component {
 
     componentDidMount() {
         const  { id } = this.props.match.params;
-        this.setState({ bagId : id });
-        this.checkOrGetUserId();
+        this.setState({ bagId : id }, () =>{
+            this.verifyBagId();
+        });
+        //this.checkOrGetUserId();
     }
 
     checkOrGetUserId() {
@@ -61,12 +63,16 @@ class RegisterBagComponent extends Component {
         };
 
         fetch('https://bouvet-panther-api.azurewebsites.net/api/QR/Activate', options)
-            .then(res => res.json())
+            .then(res => {
+                localStorage.setItem('token', res.headers.get('x-plukk-token'));
+                return res.json();
+            })
             .then(res => this.handleRespone(res))
             .catch(error => console.log(error));
     }
 
     handleRespone(response){
+        localStorage.setItem('uid', response.userId);
         this.setState({
             validationResponse: response.status
         });
