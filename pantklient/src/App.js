@@ -20,9 +20,6 @@ class App extends Component {
 					<li>
 						<Link to="/profile"> <FaUserCircle/> </Link>
 					</li>
-					<li>
-						<Link to="/login"> Login </Link>
-					</li>
 				</ul>
       		</nav>
 		</div>

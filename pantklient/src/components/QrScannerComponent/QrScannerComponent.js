@@ -27,7 +27,6 @@ class QrScannerComponent extends Component {
     render() {
         return (
             <div>
-                <div>{this.state.result}</div>
                 <div id="qr-container">
                     <QrReader
                         delay={this.state.delay}

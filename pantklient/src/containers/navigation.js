@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 // Pages
-import ProfileComponent from '../components/AboutComponent/ProfileComponent';
+import ProfileComponent from '../components/ProfileComponent/ProfileComponent';
 import RegisterBagComponent from '../components/RegisterBagComponent/RegisterBagComponent';
 import QrScannerComponent from '../components/QrScannerComponent/QrScannerComponent';
 import Login from '../components/Login/Login';
