@@ -45,14 +45,18 @@ namespace PantAPI.Controllers
 
             await bagRepository.DeleteAsync(bag);
 
-            bag.PartitionKey = activateModel.UserId;
-            await bagRepository.AddOrUpdateAsync(bag);
+            var newBag = new Bag(activateModel.UserId, bag.BagId)
+            {
+                CreatedDate = bag.CreatedDate
+            };
+            
+            await bagRepository.AddOrUpdateAsync(newBag);
 
             return Ok(new ActivateResultModel
             {
                 Status = ActivativateStatus.OK,
-                UserId = bag.UserId,
-                BagId = bag.BagId
+                UserId = newBag.UserId,
+                BagId = newBag.BagId
             });
         }
 
