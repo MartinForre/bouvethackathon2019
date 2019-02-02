@@ -1,6 +1,6 @@
 body{
     background: url('gfx/background.svg') no-repeat;
-
+    background-size: 100% auto;
 }
 
 .App {
