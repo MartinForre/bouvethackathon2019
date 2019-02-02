@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using PantAPI.Models;
 using PantAPI.Repositories;
 using System;
 using System.Collections.Generic;
@@ -11,13 +12,15 @@ namespace PantAPI
     {
         private readonly IHttpContextAccessor httpContextAccessor;
         private readonly UserRepository userRepository;
+        private readonly TokenRepository tokenRepository;
 
-        public AuthService(IHttpContextAccessor httpContextAccessor,  UserRepository userRepository)
+        public AuthService(IHttpContextAccessor httpContextAccessor,  UserRepository userRepository, TokenRepository tokenRepository)
         {
             this.httpContextAccessor = httpContextAccessor;
             this.userRepository = userRepository;
+            this.tokenRepository = tokenRepository;
         }
-        public async Task EnsureToken()
+        public async Task EnsureTokenAsync()
         {
             var token = httpContextAccessor.HttpContext.Request.Headers["Authorization"];
             var newToken = await userRepository.AuthenticateAsync(token);
@@ -32,15 +35,16 @@ namespace PantAPI
 
         internal async Task AnonymousUser(string userId)
         {
-            var newUser = await userRepository.RegisterUser(userId, null, null, null);
+            var newToken = tokenRepository.GenerateNewToken();
+            await tokenRepository.AddOrUpdateAsync(new UserToken("Tokens", newToken, userId));
 
             if (httpContextAccessor.HttpContext.Request.Headers.ContainsKey("Authorization"))
             {
-                httpContextAccessor.HttpContext.Request.Headers["Authorization"] = newUser.Token;
+                httpContextAccessor.HttpContext.Request.Headers["Authorization"] = newToken;
             }
             else
             {
-                httpContextAccessor.HttpContext.Request.Headers.Add("Authorization", newUser.Token);
+                httpContextAccessor.HttpContext.Request.Headers.Add("Authorization", newToken);
             }
         }
     }

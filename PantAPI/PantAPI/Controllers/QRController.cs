@@ -31,7 +31,7 @@ namespace PantAPI.Controllers
                 await authService.AnonymousUser(activateModel.UserId);
             }
 
-            await authService.EnsureToken();
+            await authService.EnsureTokenAsync();
 
             var bag = await bagRepository.GetUnusedAsync(activateModel.BagId);
             if (bag == null)
