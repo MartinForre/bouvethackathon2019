@@ -19,7 +19,7 @@ class RegisterComponent extends Component {
         let userData = {
             name: this.nameInput.value,
             password: this.passwordInput.value,
-            email: this.email.value
+            email: this.emailInput.value
         }
 
         const options = {
@@ -64,7 +64,7 @@ class RegisterComponent extends Component {
                             <input
                                 type="email"
                                 placeholder="E-post"
-                                ref={input => this.email = input}
+                                ref={input => this.emailInput = input}
                             />
                             <input 
                                 type="text"

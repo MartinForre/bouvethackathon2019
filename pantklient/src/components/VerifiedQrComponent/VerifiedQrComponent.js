@@ -4,9 +4,6 @@ import './VerifiedQrComponent.css';
 
 class VerifiedQrComponent extends Component {
 
-    constructor(props){
-        super(props);
-    }
 
  render(){
      switch(this.props.validationResponse){

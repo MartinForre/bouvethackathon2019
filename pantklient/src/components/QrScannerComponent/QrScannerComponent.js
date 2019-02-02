@@ -30,7 +30,7 @@ class QrScannerComponent extends Component {
         return (
             <div id="qr-code-page">
             <div id="plukk-logo">
-                <img src={plukk}/>
+                <img src={plukk} alt=":)"/>
             </div>
                 <div id="qr-container">
                     <QrReader
