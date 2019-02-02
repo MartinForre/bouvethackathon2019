@@ -25,7 +25,7 @@ namespace PantAPI.Controllers
         {
             var user = await userRepository.AuthenticateAsync(model.Username, model.Password);
 
-            if(user != null)
+            if(user == null)
             {
                 return Unauthorized();
             }

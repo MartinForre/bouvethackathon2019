@@ -17,13 +17,33 @@ class Login extends Component {
     event.preventDefault();
     const username = this.usernameInput.value;
     const password = this.passwordInput.value;
-    console.log("Username: " + username)
-    console.log("Password: " + password)
-    //This would be where a api call would be nice
-    if(username === 'SUPERHACKATHON'){
-      this.setState({ redirect: true });
-    }
+        let userData = {
+            password: this.passwordInput.value,
+            email: this.emailInput.value,
+        }
+
+        const options = {
+            method: 'POST',
+            mode: 'cors',
+            body: JSON.stringify(userData),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        };
+
+        fetch('https://bouvet-panther-api.azurewebsites.net/api/user/login', options)
+            .then(res => res.json())
+            .then(res => this.handleLoginResponse(res))
+            .catch(error => console.log(error));
   }
+
+  
+  handleLoginResponse(response) {
+    localStorage.setItem('uid', response.userId)
+    localStorage.setItem('name', response.name)
+    localStorage.setItem('email', response.email)
+    localStorage.setItem('token', response.token)
+}
 
   render() {
     if (this.state.redirect === true) {
