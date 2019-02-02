@@ -38,7 +38,7 @@ namespace PantAPI
             var token = httpContextAccessor.HttpContext.Request.Headers["Authorization"];
             var newToken = await userRepository.AuthenticateAsync(token);
 
-            if (newToken != null)
+            if (newToken == null)
             {
                 throw new UnauthorizedAccessException();
             }
