@@ -56,16 +56,12 @@ namespace PantAPI.Controllers
             });
         }
 
-
-
-
-
         [HttpGet]
         [Route("Generate")]
         [ProducesResponseType(typeof(string), 200)]
         public async Task<ActionResult> Generate()
         {
-            await authService.EnsureToken();
+            //await authService.EnsureToken();
 
             var bagId = Guid.NewGuid().ToString();
             var baseUrl = "https://bouvet-panther.azurewebsites.net/#/registerBag/";
