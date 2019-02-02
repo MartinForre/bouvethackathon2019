@@ -12,8 +12,7 @@ class ProfileComponent extends Component {
 
     componentDidMount(){
         
-        if(!localStorage.getItem('Authorization')){
-            console.log("Aldri komme")
+        if(!localStorage.getItem('token')){
             this.setState({
                 redirect: true
             })
@@ -36,18 +35,20 @@ class ProfileComponent extends Component {
                     type="text"
                     placeholder="Ola"
                     ref={input => this.nameInput = input}
+                    value={localStorage.getItem('name')}
                 />
                 <input
                     type="text"
                     placeholder="E-post"
                     ref={input => this.emailInput = input}
+                    value={localStorage.getItem('email')}
                 />
                 <input 
                     type="text"
                     placeholder="Passord"
                     ref={input => this.passwordInput = input}
                 />
-                <button>Oppdater info</button>
+                <button disabled>Oppdater info</button>
                 
             </form>
         </div>

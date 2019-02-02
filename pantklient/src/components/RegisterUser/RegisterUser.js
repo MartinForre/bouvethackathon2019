@@ -19,7 +19,8 @@ class RegisterComponent extends Component {
         let userData = {
             name: this.nameInput.value,
             password: this.passwordInput.value,
-            email: this.emailInput.value
+            email: this.emailInput.value,
+            userId: localStorage.getItem('uid')
         }
 
         const options = {
@@ -31,21 +32,24 @@ class RegisterComponent extends Component {
             },
         };
 
-        //fetch('https://bouvet-panther-api.azurewebsites.net/api/user/register', options)
-        //    .then(res => res.json())
-        //    .then(res => this.handleRespone(res))
-        //    .catch(error => console.log(error));
+        fetch('https://bouvet-panther-api.azurewebsites.net/api/user/register', options)
+            .then(res => res.json())
+            .then(res => this.handleRegisterResponse(res))
+            .catch(error => console.log(error));
         console.log(userData);
         this.setState({redirect: true})
     }
 
     handleRegisterResponse(response) {
-
+        localStorage.setItem('uid', response.userId)
+        localStorage.setItem('name', response.name)
+        localStorage.setItem('email', response.email)
+        localStorage.setItem('token', response.token)
     }
 
     render(){
         if(this.state.redirect) {
-            return <Redirect to='/login' />
+            return <Redirect to='/' />
         }
         return (
             <div>
