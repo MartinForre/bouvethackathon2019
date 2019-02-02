@@ -6,6 +6,7 @@ import ProfileComponent from '../components/ProfileComponent/ProfileComponent';
 import RegisterBagComponent from '../components/RegisterBagComponent/RegisterBagComponent';
 import QrScannerComponent from '../components/QrScannerComponent/QrScannerComponent';
 import Login from '../components/Login/Login';
+import RegisterUser from '../components/RegisterUser/RegisterUser';
 
 export default () => (
   <Switch>
@@ -25,6 +26,10 @@ export default () => (
     <Route
       path='/registerBag/:id'
       component={RegisterBagComponent}
+    />
+    <Route
+      path='/registerUser'
+      component={RegisterUser}
     />
   </Switch>
 );

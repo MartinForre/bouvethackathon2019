@@ -2,7 +2,7 @@
 
 .login-page {
   width: 360px;
-  padding: 50% 0 0;
+  padding: 8% 0 0;
   margin: auto;
 }
 .form {
@@ -52,9 +52,7 @@
   color: #4CAF50;
   text-decoration: none;
 }
-.form .register-form {
-  display: none;
-}
+
 .container {
   position: relative;
   z-index: 1;

@@ -1,27 +1,28 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 
-
 import "./Login.css";
 
 class Login extends Component {
-  //TODO: Put firebase login stuff in FirebaseService
   
   constructor(props) {
     super(props);
-    this.authWithFacebook = this.authWithFacebook.bind(this);
-    this.authWithEmailPassword = this.authWithEmailPassword.bind(this);
+    this.authWithUsernamePassword = this.authWithUsernamePassword.bind(this);
     this.state = {
       redirect: false
     };
   }
 
-  authWithFacebook() {
-    
-  }
-
-  authWithEmailPassword(event) {
-   
+  authWithUsernamePassword(event) {
+    event.preventDefault();
+    const username = this.usernameInput.value;
+    const password = this.passwordInput.value;
+    console.log("Username: " + username)
+    console.log("Password: " + password)
+    //This would be where a api call would be nice
+    if(username === 'SUPERHACKATHON'){
+      this.setState({ redirect: true });
+    }
   }
 
   render() {
@@ -29,69 +30,26 @@ class Login extends Component {
       return <Redirect to="/"/>;
     }
     return (
-      <div className="loginContainer">
-       
+    <div className="login-page">
+      <div className="form">
 
-        <button
-          style={{ width: "100%" }}
-          className="bp3-button bp3-intent-primary"
-          onClick={() => {
-            this.authWithFacebook();
-          }}
-        >
-          Log in with Facebook
-        </button>
-        <hr style={{ marginTop: "10px", marginBottom: "10px" }} />
-        <form
-          onSubmit={event => {
-            this.authWithEmailPassword(event);
-          }}
-          ref={form => {
-            this.loginForm = form;
-          }}
-        >
-          <div
-            style={{ marginBottom: "10px" }}
-            className="bp3-callout bp3-icon-info-sign"
-          >
-            <h2>Note</h2>
-            If you don't have an account already, this form will create your
-            account.
-          </div>
-          <label className="bp3-label">
-            Email
-            <input
-              style={{ width: "100%" }}
-              className="bp3-input"
-              name="email"
-              type="email"
-              ref={input => {
-                this.emailInput = input;
-              }}
-              placeholder="Email"
-            />
-          </label>
-          <label className="bp3-label">
-            Password
-            <input
-              style={{ width: "100%" }}
-              className="bp3-input"
-              name="password"
-              type="password"
-              ref={input => {
-                this.passwordInput = input;
-              }}
-              placeholder="Password"
-            />
-          </label>
-          <input
-            style={{ width: "100%" }}
-            type="submit"
-            className="bp3-button bp3-intent-primary"
-            value="Log In"
+        <form className="login-form"
+          onSubmit={event => this.authWithUsernamePassword(event)}
+          ref={form => this.loginForm = form}>
+          
+          <input className="text" 
+            placeholder="Brukernavn"
+            ref={input => this.usernameInput = input}
           />
+          <input className="password" 
+            placeholder="Passord"
+            ref={input => this.passwordInput = input}
+          />
+          <button>logg inn</button>
+          <p className  ="message">Ikke registrert? <a href="#/registerUser">Opprett konto</a></p>
         </form>
       </div>
+    </div>
     );
   }
 }
