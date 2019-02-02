@@ -47,7 +47,7 @@ namespace PantAPI.Controllers
                     Weight = bag.Weight,
 
                 }).ToList(),
-                Balance = 0
+                Balance = bags.Sum(c => c.Value)
             });
         }
     }

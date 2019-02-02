@@ -1,5 +1,12 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+
+body, html{
+  height: 100%;
+}
+
 body{
     background: url('gfx/background.svg') no-repeat;
+    font-family: "Roboto", sans-serif;
     background-size: 100% auto;
 }
 

@@ -9,7 +9,7 @@ namespace PantAPI.Models
     {
         public string BagId { get; set; }
         public string Location { get; set; }
-        public decimal Value { get; set; }
-        public decimal Weight { get; set; }
+        public double Value { get; set; }
+        public double Weight { get; set; }
     }
 }

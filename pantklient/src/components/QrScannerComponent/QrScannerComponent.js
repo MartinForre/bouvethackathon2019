@@ -29,16 +29,16 @@ class QrScannerComponent extends Component {
     render() {
         return (
             <div id="qr-code-page">
+            <div id="plukk-logo">
+                <img src={plukk}/>
+            </div>
                 <div id="qr-container">
                     <QrReader
                         delay={this.state.delay}
                         onError={this.handleError}
                         onScan={this.handleScan}
-                        style={{ width: "100%"}} //TODO seriøst fiks denne. ser stygg ut
+                        className="full-width" 
                     />
-                </div>
-                <div id="plukk-logo">
-                    <img src={plukk}/>
                 </div>
             </div>
         );

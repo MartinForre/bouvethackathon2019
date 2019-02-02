@@ -3,6 +3,14 @@
     margin-top: 50px;
     
 }
+#qr-code-page{
+    text-align: center;
+    
+}
+
 #qr-container{
-    padding: 35% 0 0;
+    padding: 30% 0 0;
+}
+.full-width{
+    width: 100%;
 }
