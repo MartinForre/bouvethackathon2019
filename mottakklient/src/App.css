@@ -22,6 +22,15 @@
   color: #61dafb;
 }
 
+
+button{
+  background: black;
+  color: white;
+  display:block;
+  padding: 10px 20px;
+  margin: 10px auto;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
