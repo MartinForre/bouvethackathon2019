@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using System;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.AzureAD.UI;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -30,6 +33,7 @@ namespace PantAPI
 
             services.AddCors();
             services.AddTransient(s => new BagRepository(Configuration.GetValue<string>("StorageConnectionString")));
+            services.AddTransient(s => new UserRepository(Configuration.GetValue<string>("StorageConnectionString")));
 
             services.AddAuthentication(AzureADDefaults.AuthenticationScheme)
                 .AddAzureAD(options => Configuration.Bind("AzureAd", options));
