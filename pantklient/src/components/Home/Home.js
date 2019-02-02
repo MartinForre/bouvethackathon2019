@@ -48,15 +48,6 @@ class HomeComponent extends Component {
     }
 
     render(){
-        if (!this.isLoggedIn()) {
-            return (
-                <div>
-                    <p>
-                        Du er ikke logget inn
-                    </p>
-                </div>
-            );
-        }
         return (
             <div>
                 <div className="balance">
