@@ -33,7 +33,15 @@ namespace PantAPI
         internal async Task AnonymousUser(string userId)
         {
             var newUser = await userRepository.RegisterUser(userId, null, null, null);
-            httpContextAccessor.HttpContext.Request.Headers.Add("Authorization", newUser.Token);
+
+            if (httpContextAccessor.HttpContext.Request.Headers.ContainsKey("Authorization"))
+            {
+                httpContextAccessor.HttpContext.Request.Headers["Authorization"] = newUser.Token;
+            }
+            else
+            {
+                httpContextAccessor.HttpContext.Request.Headers.Add("Authorization", newUser.Token);
+            }
         }
     }
 }

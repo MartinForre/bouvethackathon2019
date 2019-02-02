@@ -64,6 +64,7 @@ class RegisterBagComponent extends Component {
 
         fetch('https://bouvet-panther-api.azurewebsites.net/api/QR/Activate', options)
             .then(res => {
+                console.log(res)
                 localStorage.setItem('token', res.headers.get('x-plukk-token'));
                 return res.json();
             })
@@ -74,6 +75,7 @@ class RegisterBagComponent extends Component {
     handleRespone(response){
         localStorage.setItem('uid', response.userId);
         this.setState({
+            uid: response.userId,
             validationResponse: response.status
         });
     }
