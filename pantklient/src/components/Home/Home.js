@@ -26,21 +26,27 @@ class HomeComponent extends Component {
             .catch(error => console.log(error))
     }
 
+    balanceIsPositive(){
+        return this.state.balance > 0;
+    }
+
     render(){
 
         return (
             <div>
                 <h2>Home</h2>
+                {this.balanceIsPositive() ?
                 <div> Din plukkesaldo: <strong>{this.state.balance}</strong> kroner </div>
-
-
-                <p>
+                : <div>Kom igang med å scanne dine poser med plast og se din saldo vokse!</div>
+                }
+                <p>                    
                     Din bydel har plukket 12 345 kg plast i år
                 </p>
-
+                {this.balanceIsPositive() &&
                 <p>
                     Takk for at du har plukket {this.state.balance} kg plast i år
-                    </p>
+                </p>
+                }
                 <p>
                     Din bydel har plukket 12 345 kg plast i år
                 </p>
