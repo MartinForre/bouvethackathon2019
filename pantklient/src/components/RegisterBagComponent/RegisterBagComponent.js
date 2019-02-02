@@ -80,12 +80,10 @@ class RegisterBagComponent extends Component {
 
         return(
             <div className="App">
-                <h1>REGISTER BAG</h1>
-                <p>Din pose har id: {this.state.bagId}</p>
-
-                {this.state.validationResponse ? 
-                <VerifiedQrComponent
-                   validationResponse= {this.state.validationResponse}/> : 
+                {this.state.validationResponse ?
+                    <VerifiedQrComponent
+                        validationResponse= {this.state.validationResponse}/>
+                :
                 <FaRecycle className="App-logo"/>}
             </div>
         )
