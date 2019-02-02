@@ -74,6 +74,7 @@ class RegisterBagComponent extends Component {
     handleRespone(response){
         localStorage.setItem('uid', response.userId);
         this.setState({
+            uid: response.userId,
             validationResponse: response.status
         });
     }
