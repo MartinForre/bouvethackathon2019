@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { FaRecycle } from 'react-icons/fa';
-import VerifiedQrComponent from './VerifiedQrComponent';
+import VerifiedQrComponent from '../VerifiedQrComponent/VerifiedQrComponent';
 
 class RegisterBagComponent extends Component {
 
@@ -80,12 +80,10 @@ class RegisterBagComponent extends Component {
 
         return(
             <div className="App">
-                <h1>REGISTER BAG</h1>
-                <p>Din pose har id: {this.state.bagId}</p>
-
-                {this.state.validationResponse ? 
-                <VerifiedQrComponent
-                   validationResponse= {this.state.validationResponse}/> : 
+                {this.state.validationResponse ?
+                    <VerifiedQrComponent
+                        validationResponse= {this.state.validationResponse}/>
+                :
                 <FaRecycle className="App-logo"/>}
             </div>
         )

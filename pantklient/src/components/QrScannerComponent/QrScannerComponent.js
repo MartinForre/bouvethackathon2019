@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import QrReader from "react-qr-reader";
+import './QrScannerComponent.css';
+import plukk from "../../plukk.svg";
 
 class QrScannerComponent extends Component {
     constructor(props) {
@@ -26,17 +28,18 @@ class QrScannerComponent extends Component {
     }
     render() {
         return (
-            <div>
-                <div>{this.state.result}</div>
+            <div id="qr-code-page">
+            <div id="plukk-logo">
+                <img src={plukk} alt=":)"/>
+            </div>
                 <div id="qr-container">
                     <QrReader
                         delay={this.state.delay}
                         onError={this.handleError}
                         onScan={this.handleScan}
-                        style={{ width: "100%" }} //TODO seriøst fiks denne. ser stygg ut
+                        className="full-width" 
                     />
                 </div>
-
             </div>
         );
     }

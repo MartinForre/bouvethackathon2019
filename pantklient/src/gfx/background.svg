@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="375px" height="377px" viewBox="0 0 375 377" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.6 (67491) - http://www.bohemiancoding.com/sketch -->
+    <title>Group Copy</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#FFFFFF" stop-opacity="0.5" offset="0%"></stop>
+            <stop stop-color="#000000" stop-opacity="0.5" offset="100%"></stop>
+        </linearGradient>
+        <rect id="path-2" x="25" y="0" width="375" height="373"></rect>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="iPhone-XS-Copy-7">
+            <g id="Group-Copy" transform="translate(-25.000000, 0.000000)">
+                <g id="Rectangle-Copy-2">
+                    <use fill="#32878D" xlink:href="#path-2"></use>
+                    <use fill="url(#linearGradient-1)" xlink:href="#path-2"></use>
+                </g>
+                <path d="M-4.25984889e-29,352.5 C74.525986,331.233414 131.322347,331.233414 170.389082,352.5 C209.455817,373.766586 265.122202,370.545306 337.388237,342.836159 C358.279692,332.945386 382.786438,328 410.908473,328 C439.030509,328 439.030509,344.333333 410.908473,377 L14.0350018,377 L14.0350018,335.188375 L-4.25984889e-29,352.5 Z" id="Path-2" fill="#FFFFFF"></path>
+            </g>
+        </g>
+    </g>
+</svg>
