@@ -13,11 +13,13 @@ namespace PantAPI.Controllers
     {
         private readonly BagRepository bagRepository;
         private readonly AuthService authService;
+        private readonly UserRepository userRepository;
 
-        public QRController(BagRepository bagRepository, AuthService authService)
+        public QRController(BagRepository bagRepository, AuthService authService, UserRepository userRepository)
         {
             this.bagRepository = bagRepository;
             this.authService = authService;
+            this.userRepository = userRepository;
         }
 
         [HttpPost]
@@ -31,7 +33,12 @@ namespace PantAPI.Controllers
                 await authService.AnonymousUser(activateModel.UserId);
             }
 
-            await authService.EnsureTokenAsync();
+            var user = await authService.EnsureAndGetUserAsync();
+
+            if(user == null && !string.IsNullOrEmpty(activateModel.UserId))
+            {
+                user = await userRepository.RegisterUser(activateModel.UserId, null, null, null);
+            }
 
             var bag = await bagRepository.GetUnusedAsync(activateModel.BagId);
             if (bag == null)
