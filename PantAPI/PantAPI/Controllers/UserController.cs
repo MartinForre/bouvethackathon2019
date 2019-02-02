@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PantAPI.Models;
+using PantAPI.Repositories;
 using System;
+using System.Threading.Tasks;
 
 namespace PantAPI.Controllers
 {
@@ -7,13 +10,34 @@ namespace PantAPI.Controllers
     [ApiController]
     public class UserController: ControllerBase
     {
-        [HttpGet]
+        private readonly UserRepository userRepository;
+
+        public UserController(UserRepository userRepository)
+        {
+            this.userRepository = userRepository;
+        }
+
+        [HttpPost]
+        [Route("Login")]
+        public async Task<ActionResult> Login([FromBody] LoginModel model)
+        {
+            var user = await userRepository.AuthenticateAsync(model.Username, model.Password);
+
+            if(user != null)
+            {
+                return Unauthorized();
+            }
+
+            return Ok(new UserProfileApiModel(user));
+        }
+
+        [HttpPost]
         [Route("Register")]
         [ProducesResponseType(typeof(string), 200)]
-        public ActionResult Register()
+        public async Task<ActionResult> Register([FromBody] RegisterModel model)
         {
-            string id = Guid.NewGuid().ToString();
-            return Ok( new { uid = id });
+            var registeredUser = await userRepository.RegisterUser(model.userId, model.email, model.name, model.password);
+            return Ok(new UserProfileApiModel(registeredUser));
         }
     }
 }

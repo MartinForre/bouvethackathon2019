@@ -1,10 +1,12 @@
 ﻿using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Table;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace PantAPI.Repositories
 {
-    public abstract class BaseRepository<T> where T : TableEntity
+    public abstract class BaseRepository<T> where T : TableEntity, new()
     {
         private readonly string connectionString;
         private readonly string tableName;
@@ -50,6 +52,25 @@ namespace PantAPI.Repositories
             var result = await table.ExecuteAsync(retrieveOperation);
 
             return (T)result.Result;
+        }
+
+        public async Task<IEnumerable<T>> GetWhereAsync(string partitionKey, Func<TableQuery<T>, TableQuery<T>> where)
+        {
+            var query = where(new TableQuery<T>());
+            var table = await GetTableAsync();
+
+            List<T> results = new List<T>();
+            TableContinuationToken continuationToken = null;
+            do
+            {
+                TableQuerySegment<T> queryResults = await table.ExecuteQuerySegmentedAsync(query, continuationToken);
+
+                continuationToken = queryResults.ContinuationToken;
+                results.AddRange(queryResults.Results);
+
+            } while (continuationToken != null);
+
+            return results;
         }
 
         public async Task DeleteAsync(T item)

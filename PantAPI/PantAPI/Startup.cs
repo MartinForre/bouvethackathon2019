@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.AzureAD.UI;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,9 +35,8 @@ namespace PantAPI
             services.AddCors();
             services.AddTransient(s => new BagRepository(Configuration.GetValue<string>("StorageConnectionString")));
             services.AddTransient(s => new UserRepository(Configuration.GetValue<string>("StorageConnectionString")));
-
-            services.AddAuthentication(AzureADDefaults.AuthenticationScheme)
-                .AddAzureAD(options => Configuration.Bind("AzureAd", options));
+            services.AddScoped<AuthService>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,8 +56,6 @@ namespace PantAPI
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "PantAPI V1");
             });
-
-            app.UseAuthentication();
 
             app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 

@@ -11,11 +11,13 @@ namespace PantAPI.Controllers
     [ApiController]
     public class QRController : ControllerBase
     {
-        private BagRepository bagRepository;
+        private readonly BagRepository bagRepository;
+        private readonly AuthService authService;
 
-        public QRController(BagRepository bagRepository)
+        public QRController(BagRepository bagRepository, AuthService authService)
         {
             this.bagRepository = bagRepository;
+            this.authService = authService;
         }
 
         [HttpPost]
@@ -23,18 +25,22 @@ namespace PantAPI.Controllers
         [ProducesResponseType(typeof(ActivateResultModel), 200)]
         public async Task<ActionResult> Activate([FromBody] ActivateModel activateModel)
         {
+            if (string.IsNullOrEmpty(activateModel.UserId))
+            {
+                activateModel.UserId = Guid.NewGuid().ToString();
+                await authService.AnonymousUser(activateModel.UserId);
+            }
+
+            await authService.EnsureToken();
+
             var bag = await bagRepository.GetUnusedAsync(activateModel.BagId);
             if (bag == null)
             {
                 return Ok(new ActivateResultModel
                 {
-                    Status = ActivativateStatus.Unknown
+                    Status = ActivativateStatus.Unknown,
+                    UserId = activateModel.UserId
                 });
-            }
-
-            if (string.IsNullOrEmpty(activateModel.UserId))
-            {
-                activateModel.UserId = Guid.NewGuid().ToString();
             }
 
             await bagRepository.DeleteAsync(bag);
@@ -51,11 +57,12 @@ namespace PantAPI.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         [Route("Generate")]
         [ProducesResponseType(typeof(string), 200)]
         public async Task<ActionResult> Generate()
         {
+            await authService.EnsureToken();
+
             var bagId = Guid.NewGuid().ToString();
             var baseUrl = "https://bouvet-panther.azurewebsites.net/#/registerBag/";
             var qrCode = baseUrl + bagId;
