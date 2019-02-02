@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PantAPI.Models;
 using PantAPI.Repositories;
 using System;
@@ -50,6 +51,7 @@ namespace PantAPI.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         [Route("Generate")]
         [ProducesResponseType(typeof(string), 200)]
         public async Task<ActionResult> Generate()

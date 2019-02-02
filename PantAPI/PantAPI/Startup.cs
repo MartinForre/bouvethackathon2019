@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.AzureAD.UI;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using PantAPI.Repositories;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -32,8 +27,12 @@ namespace PantAPI
             {
                 c.SwaggerDoc("v1", new Info { Title = "PantAPI", Version = "v1" });
             });
+
             services.AddCors();
             services.AddTransient(s => new BagRepository(Configuration.GetValue<string>("StorageConnectionString")));
+
+            services.AddAuthentication(AzureADDefaults.AuthenticationScheme)
+                .AddAzureAD(options => Configuration.Bind("AzureAd", options));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,6 +52,8 @@ namespace PantAPI
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "PantAPI V1");
             });
+
+            app.UseAuthentication();
 
             app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
