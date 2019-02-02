@@ -47,6 +47,7 @@ class RegisterBagComponent extends Component {
         const myPost = {
             BagId: this.state.bagId,
             UserId: this.state.uid
+            
         }
           
         const options = {
@@ -54,7 +55,8 @@ class RegisterBagComponent extends Component {
             mode: 'cors',
             body: JSON.stringify(myPost),
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization' : localStorage.getItem('token')
             },
         };
 

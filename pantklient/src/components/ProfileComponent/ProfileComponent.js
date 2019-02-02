@@ -28,8 +28,7 @@ class ProfileComponent extends Component {
             <form
                 onSubmit={event => this.registerUser(event)}
                 ref={form => this.loginForm = form}
-                className="form"
-            >
+                className="form">
                 <h2>Profil</h2>
                 <input 
                     type="text"
