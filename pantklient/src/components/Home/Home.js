@@ -16,6 +16,14 @@ class HomeComponent extends Component {
         return (
             <div>
                 <h2>Home</h2>
+
+                <p>
+                    Din bydel har plukket 12 345 kg plast i år
+                </p>
+
+                <p>
+                    Takk for at du har plukket 5,3 kg plast i år
+                </p>
             </div>
         )
     }
