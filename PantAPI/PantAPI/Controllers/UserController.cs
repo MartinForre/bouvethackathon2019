@@ -69,10 +69,11 @@ namespace PantAPI.Controllers
         [HttpGet]
         [Route("Balance")]
         [ProducesResponseType(typeof(BalanceResultModel), 200)]
-        public async Task<ActionResult> Balance(string userId)
+        public async Task<ActionResult> Balance()
         {
-
-            var bags = await bagRepository.GetBagsForUserAsync(userId);
+            var user = await authService.EnsureAndGetUserAsync();
+            
+            var bags = await bagRepository.GetBagsForUserAsync(user.UserId);
 
             return Ok(new BalanceResultModel
             {

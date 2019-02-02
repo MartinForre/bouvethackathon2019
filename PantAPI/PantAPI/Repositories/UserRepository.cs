@@ -49,7 +49,7 @@ namespace PantAPI.Repositories
             return await tokenRepository.GetTokenForUserAsync(userId);
         }
 
-        public async Task<string> AuthenticateAsync(string token)
+        public async Task<UserToken> AuthenticateAsync(string token)
         {
             var userToken = await tokenRepository.GetAsync("Tokens", token);
             
@@ -60,8 +60,7 @@ namespace PantAPI.Repositories
 
             var newToken = tokenRepository.GenerateNewToken();
             await tokenRepository.DeleteAsync(userToken);
-            await tokenRepository.AddOrUpdateAsync(new UserToken("Tokens", token, userToken.UserId));
-            return token;
+            return await tokenRepository.AddOrUpdateAsync(new UserToken("Tokens", token, userToken.UserId));
         }
 
         public async Task<UserProfile> AuthenticateAsync(string email, string password)

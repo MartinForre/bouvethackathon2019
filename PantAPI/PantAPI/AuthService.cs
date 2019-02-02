@@ -25,12 +25,27 @@ namespace PantAPI
             var token = httpContextAccessor.HttpContext.Request.Headers["Authorization"];
             var newToken = await userRepository.AuthenticateAsync(token);
 
-            if(string.IsNullOrEmpty(newToken))
+            if(newToken == null)
             {
                 throw new UnauthorizedAccessException();
             }
 
-            httpContextAccessor.HttpContext.Response.Headers.Add("x-plukk-token", newToken);
+            httpContextAccessor.HttpContext.Response.Headers.Add("x-plukk-token", newToken.Token);
+        }
+
+        public async Task<UserProfile> EnsureAndGetUserAsync()
+        {
+            var token = httpContextAccessor.HttpContext.Request.Headers["Authorization"];
+            var newToken = await userRepository.AuthenticateAsync(token);
+
+            if (newToken != null)
+            {
+                throw new UnauthorizedAccessException();
+            }
+
+            httpContextAccessor.HttpContext.Response.Headers.Add("x-plukk-token", newToken.Token);
+
+            return await userRepository.GetAsync("Users", newToken.UserId);
         }
 
         internal async Task AnonymousUser(string userId)
