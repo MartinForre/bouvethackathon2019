@@ -28,7 +28,7 @@ export default () => (
       component={RegisterBagComponent}
     />
     <Route
-      path='/register'
+      path='/registerUser'
       component={RegisterUser}
     />
   </Switch>
