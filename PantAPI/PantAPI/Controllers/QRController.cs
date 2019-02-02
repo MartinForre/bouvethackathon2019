@@ -47,7 +47,8 @@ namespace PantAPI.Controllers
 
             var newBag = new Bag(activateModel.UserId, bag.BagId)
             {
-                CreatedDate = bag.CreatedDate
+                CreatedDate = bag.CreatedDate,
+                Status = BagStatus.Active
             };
             
             await bagRepository.AddOrUpdateAsync(newBag);
