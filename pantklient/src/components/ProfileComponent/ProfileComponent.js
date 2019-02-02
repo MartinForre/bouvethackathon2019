@@ -19,6 +19,40 @@ class ProfileComponent extends Component {
         }
     }
 
+    registerUser(event) {
+        event.preventDefault();
+        let userData = {
+            name: this.nameInput.value,
+            password: this.passwordInput.value,
+            email: this.emailInput.value,
+            userId: localStorage.getItem('uid')
+        }
+
+        const options = {
+            method: 'POST',
+            mode: 'cors',
+            body: JSON.stringify(userData),
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization' : localStorage.getItem('token')
+            },
+        };
+
+        fetch('https://bouvet-panther-api.azurewebsites.net/api/user/update', options)
+            .then(res => res.json())
+            .then(res => this.handleUpdateResponse(res))
+            .catch(error => console.log(error));
+        console.log(userData);
+        this.setState({redirect: true})
+    }
+
+    handleUpdateResponse(response) {
+        localStorage.setItem('uid', response.userId)
+        localStorage.setItem('name', response.name)
+        localStorage.setItem('email', response.email)
+        localStorage.setItem('token', response.token)
+    }
+    
     render(){
         
         if(this.state.redirect) {
@@ -26,7 +60,7 @@ class ProfileComponent extends Component {
         }
         return <div className="login-pages">
             <form
-                onSubmit={event => this.registerUser(event)}
+                onSubmit={event => this.updateUser(event)}
                 ref={form => this.loginForm = form}
                 className="form">
                 <h2>Profil</h2>
@@ -47,7 +81,7 @@ class ProfileComponent extends Component {
                     placeholder="Passord"
                     ref={input => this.passwordInput = input}
                 />
-                <button disabled>Oppdater info</button>
+                <button>Oppdater info</button>
                 
             </form>
         </div>
