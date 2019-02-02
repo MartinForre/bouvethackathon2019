@@ -18,7 +18,13 @@ class ProfileComponent extends Component {
             this.setState({
                 redirect: true
             })
+        }else{
+            this.setState({
+                email:localStorage.getItem('email'),
+                name:localStorage.getItem('name')
+            })
         }
+        
     }
 
     registerUser(event) {
