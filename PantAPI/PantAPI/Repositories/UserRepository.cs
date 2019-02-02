@@ -24,7 +24,8 @@ namespace PantAPI.Repositories
             var user = new UserProfile(userId)
             {
                 Email = email,
-                Token = GetNewToken()
+                Token = GetNewToken(),
+                Name = name
             };
 
             if (!string.IsNullOrEmpty(password))
