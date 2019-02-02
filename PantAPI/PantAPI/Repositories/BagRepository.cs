@@ -63,6 +63,28 @@ namespace PantAPI.Repositories
             return results;
         }
 
+        public async Task<Bag> GetBag(string bagId)
+        {
+            var query = new TableQuery<Bag>().Where(TableQuery.GenerateFilterCondition(nameof(Bag.RowKey), QueryComparisons.Equal, bagId));
+            var table = await GetTableAsync();
+
+            List<Bag> results = new List<Bag>();
+            TableContinuationToken continuationToken = null;
+            do
+            {
+                TableQuerySegment<Bag> queryResults =
+                    await table.ExecuteQuerySegmentedAsync(query, continuationToken);
+
+                continuationToken = queryResults.ContinuationToken;
+                results.AddRange(queryResults.Results);
+
+            } while (continuationToken != null);
+
+            return results.FirstOrDefault();
+        }
+
+
+
         public async Task<Bag> GetAsync(string userId, string bagId)
         {
             var retrieveOperation = TableOperation.Retrieve<Bag>(userId, bagId);

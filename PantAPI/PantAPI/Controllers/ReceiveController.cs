@@ -24,7 +24,7 @@ namespace PantAPI.Controllers
         [ProducesResponseType(typeof(ReceiveResultModel), 200)]
         public async Task<ActionResult> Receive([FromBody] ReceiveModel receiveModel)
         {
-            var bag = await bagRepository.GetAsync("NA", receiveModel.BagId);
+            var bag = await bagRepository.GetBag(receiveModel.BagId);
             if (bag == null)
             {
                 return Ok(new ReceiveResultModel
