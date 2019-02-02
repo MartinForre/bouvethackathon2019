@@ -34,18 +34,16 @@
   color: #61dafb;
 }
 
-#nav-container{
-  height: 50px;
-}
 
 nav{
   height: 50px;
-  background: #333;
-  top: 0;
-  position: absolute;
+  background: #1C4649;
+  bottom:0;
+  position: fixed;
   left: 0;
   right: 0;
   color: #fff;
+  z-index: 101;
 }
 
 nav a{
