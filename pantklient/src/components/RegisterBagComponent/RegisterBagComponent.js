@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { FaRecycle } from 'react-icons/fa';
-import VerifiedQrComponent from './VerifiedQrComponent';
+import VerifiedQrComponent from '../VerifiedQrComponent/VerifiedQrComponent';
 
 class RegisterBagComponent extends Component {
 
