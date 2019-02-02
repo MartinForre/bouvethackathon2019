@@ -1,0 +1,27 @@
+.balance {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 150px;
+    background: #6d8485;
+    width: 180px;
+    height: 180px;
+    border-radius: 90px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.totalWeight {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 150px;
+    background: #009688;
+    width: 180px;
+    height: 180px;
+    border-radius: 90px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
