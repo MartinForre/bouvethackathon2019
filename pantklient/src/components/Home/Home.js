@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import './Home.css';
 
 class HomeComponent extends Component {
@@ -38,6 +39,7 @@ class HomeComponent extends Component {
         return localStorage.getItem('uid') != null;
     }
 
+    
     calculateTotalPickedWeight = () => {
         let initalWeightValue = 0;
         let totalWeight = this.state.details.reduce(
@@ -51,11 +53,17 @@ class HomeComponent extends Component {
         return (
             <div>
                 <div className="balance">
-                    Din plukkesaldo: <strong>{this.state.balance}</strong> kroner
+                <div>Din plukkesaldo: <strong>{this.state.balance}</strong> kroner</div>
+                <div>
+                    <Link to="/"><button>Cash ut!</button></Link>
                 </div>
-
+                
+                </div>
                 <p className="totalWeight">
                     Takk for at du har plukket {this.state.totalWeight} kg plast i år
+                </p>
+                <p className="totalArea">
+                    Din bydel har plukket{this.state.totalWeight} kg plast i år
                 </p>
             </div>
         )
