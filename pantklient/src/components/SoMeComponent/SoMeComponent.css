@@ -1,0 +1,9 @@
+.SoMe {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.SoMe > *{
+    padding: 5px;
+}
